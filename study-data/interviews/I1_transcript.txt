@@ -1,0 +1,126 @@
+# Meeting Transcription
+
+  Meeting started: 10/20/2026, 1:36:01 PM
+  Duration: 15 minutes
+  Participants: I1, Interviewer
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 02:47 I1: Yeah before I commit I'll have a brief look on it whether it was reusing let's say we have some design principles. I'll just look over if few design if it is following or not if it is follow. into the github after testing it with my real world test cases, so usually
+> 03:09 I1: before committing actually write it as cases by myself which are units and integration test so once those were passed then, I'll let this code into the github.
+> 06:00 I1: Tainted through the variables and I'll check those things and if anything feels wrong then I'll solve it. This is how I usually tackle that issue of Defense
+> 07:36 Interviewer: Yeah, yeah like we already we have integrated the late Court style pattern, but due to some issues like if we have class based functions, then we cannot create one isolated development in less time so in Low latency. We want to provide as
+> 08:14 Interviewer: to the mark and we are mainly relying on the open sour lamp so that is also one of the issue so for the production based. We will obviously go for the Claude
+> 13:46 Interviewer: Okay, so let's say if your team adopted it tomorrow. What would you change
+
+  ## Transcript
+
+  00:00 Interviewer: Hello, hello.
+00:22 Interviewer: I think it is working now. can it
+00:27 I1: will have problems on sound and Butler
+00:33 Interviewer: Can we can we start the meeting? Hello.
+00:39 I1: Hello.
+00:40 Interviewer: Hello, can we start the meeting m.a. Audible?
+00:44 I1: Yeah, I know you're not able.
+00:46 Interviewer: Yeah, I got the thank you for your time. For this interview I will ask you questions.
+00:55 Interviewer: Hi everyone, this is an automated message to let you know my Tactiq extension: https://tactiq.io/r/transcribing is transcribing this meeting for me so I can give my full attention to you.
+00:55 I1: mm-hmm
+00:56 Interviewer: And you can you can answer them okay.
+01:01 I1: Okay, so what is the theme of this interview? Can you give me a brief about? What does this interview about?
+01:08 Interviewer: Okay you played the game right a code quest so basically. I want feedback from multiple people so that we can and hence the tool and maybe deploy it in real
+01:20 I1: let me
+01:22 Interviewer: life setting so that's why we want this is the Study where we want to explore what the tool does and how users are interacting with it all that kind of stuff, so that's why I want I want this meeting.
+01:35 I1: okay okay
+01:39 Interviewer: Yeah, so my first question is what is your role? And how do you use a coding assistant in your day to day work?
+01:47 I1: So usually actually design let us say if I'm in designing system, then I will design the data flow architecture and all those things regarding the system design and I will use this as an assistant to code for myself, but just like how the company actually has employees just for the coding stuff usually what the low level or junior engineer does was he will follow the instructions of a manager who gives him a task about the all the things that are needed to code it by hand so that is what I use the assistant for just like a junior engineer.
+02:28 I1: I'll use my is assistant just for coding stuff remaining all the thinking was upon dil on my back of my mind so. this is
+02:38 Interviewer: Interesting so my next question is when an a assistant gives you a call. What do you usually do before you commit it?
+02:47 I1: Yeah before I commit I'll have a brief look on it whether it was reusing let's say we have some design principles. I'll just look over if few design if it is following or not if it is follow. into the github after testing it with my real world test cases, so usually
+03:09 I1: before committing actually write it as cases by myself which are units and integration test so once those were passed then, I'll let this code into the github.
+03:20 Interviewer: Okay okay, so you will basically check whether the a According resistant is actually following the design principal rules or not in terms of coding light
+03:31 I1: yeah, yeah, I have to
+03:31 Interviewer: okay, then only you will then only you. okay nice cool.
+03:35 I1: Yeah true.
+03:38 Interviewer: Now can you tell me about the turn you remember most from a code quest? What happened and what were you thinking?
+03:46 I1: Sorry, sorry.
+03:48 Interviewer: so so can you tell me about the turn which you remember like about the
+03:53 I1: about
+03:55 Interviewer: the defense phase and that access there are two turns right.
+03:56 I1: the
+04:01 Interviewer: yeah From the can you tell me what made you what? perceive this two phase game?
+04:11 I1: So the actual interesting thing in this tool was rather than just introducing or injecting the bugs and asking the developer to solve. It is also asking. to be injected again is the so this is the cool part because lot of the tools that I have seen so far was V actually use some of these tools to in I mean increase or intelligence in the programming. Let's say if you are solving lead code question so what we usually do is we will just give this to some of it tool and then it will introduce the bugs and it will ask you to remove those works this will increase the ability of debugging and all this stuff so rather than just doing that stuff this tool. Also asks you to introduce the bugs into it so that the a assistant can.
+05:00 I1: Just like you did for the first time so that thing feels interesting for me.
+05:07 Interviewer: Yeah, cool cool now coming to the defense phase I have some questions in different space. So when the AA planted a bug in your code right, how do you go about finding it like how did you find the bug in the code?
+05:23 I1: Yeah, so what this tool actually doing this it is going for the block scope functions. Let's say I am bushing a commit and this comment includes a four to five functions then it is picking one of the function and then introducing. bugged into it so I'm checking whether the inputs my first food for thought was checking the input and output whether the inputs are being passed were correctly intended inputs or not on the same goes without puts as well, and then I will go just by the flow I mean how this data is being.
+06:00 I1: Tainted through the variables and I'll check those things and if anything feels wrong then I'll solve it. This is how I usually tackle that issue of Defense
+06:18 Interviewer: Okay yeah cool now, so will you read the whole function and run it in your head and look at the test cases or look for something which is wrong.
+06:28 I1: No, no, I'll just go with my indication. That's it.
+06:31 Interviewer: Okay okay done so were these terms where you fix the bug without being sure why your pics work now or how often did you do like this?
+06:44 I1: Yeah, these things are usually do it while pushing this to the main brands let us say I have done I have used as stand for the coding and then while push while merging this branch with the main branch. I usually check this brand. all the test cases that are being generated as for the intuition were going bright or not and if anything blocks then I block this entire to be much that's our usually do but one of the feedback that I have to give on this tool was this
+07:13 Interviewer: No no like. okay
+07:18 I1: we are actually coding it blindly without even running it. So if there was something like a simulation like a lead code to check the output of the function that we have debug then that would be fine. That would make it better I guess.
+07:36 Interviewer: Yeah, yeah like we already we have integrated the late Court style pattern, but due to some issues like if we have class based functions, then we cannot create one isolated development in less time so in Low latency. We want to provide as
+07:53 Interviewer: much as to the developer because the developer shouldn't be irritated or He shouldn't be getting bored of this kind exhausted or board from this kind of
+08:02 I1: exhausted
+08:06 Interviewer: tools right. So that's why we so that's the reason why the text case are not up
+08:08 I1: okay okay
+08:14 Interviewer: to the mark and we are mainly relying on the open sour lamp so that is also one of the issue so for the production based. We will obviously go for the Claude
+08:25 Interviewer: Apa or GPT Apa which are far better than the open source exactly then we can say
+08:27 I1: friendly or models okay
+08:30 Interviewer: that this model is reliability generating the test cases, so yeah cool. Yeah, which bugs were hardest to find and why like there are four levels right. The first one is index level semantic. Well, algorithmic errors and halation code halleluinated code. What which level?
+08:48 I1: Yeah, I feel algorithmic errors for toughest to find.
+08:52 Interviewer: Okay okay, do you have any reason for that? Maybe it will help formal?
+09:01 I1: That's what I feel. I haven't gone too deep into it, but that's what I
+09:07 Interviewer: Okay your intention say that algorithmic errors were somewhat difficult okay.
+09:11 I1: true
+09:12 Interviewer: Yeah okay nice now. Let's move on to the attack phase so how did you decide what book to plant and what did you need to know about the code to climate?
+09:27 I1: Okay so first thing if you want to inject a bug first thing is was the one you should be aware of what the function is actually doing let us say if it is given the file which you have edited during the commit then you should be aware of all the functions or or to be precise. You should be knowing the dataflow. And the corresponding outputs of the function to really inject above into it so during me injecting a bug. I'll just know these things and then I'll manipulate the data for let's say if a variable is ending from a to D let's say there are variables from a to D then I'll skip the c so there should actually figure out which variable is being skipped and which has to be fixed so in that way. I usually inject bugs while playing this a code Quest
+10:22 Interviewer: Okay, you are saying that you have to have an understanding of the overall code, which you generated or which you wrote and based on that you are trying to yeah
+10:29 I1: Yeah, which eyes and did it?
+10:32 Interviewer: okay, which you generated and based on that you are actually planting the bugs or perturbation okay cool nice. Yeah did attacking feel different from defending and in what way it felt different.
+10:53 I1: Not that much I feel both at the same pace.
+10:57 Interviewer: okay Okay like if you skip any attack turns. If you skip an attack terms like you have also provided this keep button for the attack turns right until you skipping a reduced any attack question.
+11:14 I1: Yeah ice cube, some of my attack on so what I usually do is when I reset threshold of greater than 70 then I feel that okay. I have a pretty good understanding of the code. That has been generated by the llm and also I can conclude that okay this may indicate into the code base so good so usually when the threshold were I mean we have a threshold now. How many great Returns were
+11:38 Interviewer: Yeah, yeah.
+11:39 I1: being Wind by the user so if that threshold exceeds 70% then I usually skip that actions.
+11:46 Interviewer: Okay okay, so when you reach this ratio you are basically skipping the attack face right.
+11:51 I1: Yeah, I do.
+11:53 Interviewer: Okay okay now coming to the usefulness and ease of use how useful would this be let's say your working in a organization and you have a team right. Let's say how useful this tool would be in your team's real review process.
+12:11 I1: Okay so in terms of the actual code base security and what do we say consistency of the code base this tool will be actually useful, but it may irritate or exhaust the developers because for every comment they have to be they have to
+12:26 Interviewer: exactly
+12:30 I1: make sure that they clear the minimum threshold of the two but I think so, this
+12:33 Interviewer: yeah
+12:34 I1: is good for the production grade code basis, even though.
+12:40 Interviewer: okay
+12:40 I1: It exhausts some of the developers that's fine, because the most of the developers who have Britain knowledge on the code which is means generated by them. They can play it easily so I feel it upon 5 star rating. I'll give it 3.5 or 4.
+12:57 Interviewer: Okay got it. So what got in your way when you are using it like is it the UI or is it the setup or is it a workflow? Like what did you find interesting about this whole game?
+13:15 I1: about this tool
+13:16 Interviewer: About this tolia.
+13:18 I1: So the use user interface was pretty good, but actually like the workflow. I mean the phases how they are arrangeables completely what makes the developer to go in deep. In depth to the code that is been generated by him. So these are actually
+13:37 Interviewer: okay
+13:37 I1: structured in a way which makes the developer indulge into the understanding of the code, which was being generated, so that's what I feel.
+13:46 Interviewer: Okay, so let's say if your team adopted it tomorrow. What would you change
+13:53 Interviewer: first? So what is your suggestion? What is your feedback?
+13:57 I1: on the tool
+13:59 Interviewer: on the tool
+14:00 I1: So what I usually is this as I have actually pointed out a few minutes before I will try to integrate this test guesses something like that. Just like a lead code Style
+14:15 Interviewer: yeah
+14:16 I1: Yeah, I think that was the major road, block and everything was fine.
+14:18 Interviewer: Okay that that's a major roadblock. Yeah okay okay so coming to the game
+14:21 I1: Oh, yeah.
+14:24 Interviewer: elements. What did you notice about the bad toasts 3 leaderboard did any of them change what you did like? Did you get encouraged or discouraged? Do you feel like you want to play the game again and again?
+14:35 I1: No okay, let me put up in this way this doesn't actually affect me a lot. Maybe
+14:38 Interviewer: yeah okay
+14:42 I1: this may engage many of the developers to actually get over the leaderboard. Let us say if these tool was indicated into a company then this will be good because the who is the manager the manager who. a independent isolated leaderboard for them. So that they can determine who is employer of the month something like that. Then that will actually motivates that developer to play the game more and more.
+15:15 Interviewer: More and more so that he actually knows what he is. Trying to generate uai.
+15:19 I1: Yeah, exactly so this reaches the internet purpose of the tool.
+15:21 Interviewer: Yeah. yeah, got it but Yeah, that's it from my side I1 and thank you for the meeting and if you have any feedback or if you have any queries about this tool or if give compliments or something like that you are welcome.
+15:43 I1: I think I have pointed all the major advantages and disadvantages as well, so I think. This is done from my side as well.
+15:53 Interviewer: Yeah, yeah, thank you for me.
+15:55 I1: okay
+  

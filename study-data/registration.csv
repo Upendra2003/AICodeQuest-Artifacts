@@ -1,0 +1,35 @@
+pid,role,experience,languages,github_use,ai_code_used_unmodified,conf_find_bugs,conf_understand_ai,consented,will_install,gender,org,submitted
+R01,PhD / Research student,3–5 years,Python,Rarely,51–75%,3,4,True,Yes,Male,ORG01,2026-09-01T11:17:01.487000
+R02,Undergraduate student,1–2 years,"Python, Javascript, Typescript, Java, C++",Daily,Less than 25%,4,4,True,Yes,Male,ORG01,2026-09-01T14:55:04.575000
+R03,PhD / Research student,1–2 years,"Python, C",Several times a week,More than 75%,3,3,True,Yes,Male,ORG01,2026-09-01T14:58:10.960000
+R04,Undergraduate student,1–2 years,"Python, Java, C++, C",Several times a week,It varies substantially,4,3,True,Yes,Male,ORG01,2026-09-01T14:58:26.886000
+R05,Postgraduate student,3–5 years,"Java, C++, HTML/CSS",Several times a month,More than 75%,2,2,True,Yes,Male,ORG01,2026-09-01T16:38:16.005000
+R06,Undergraduate student,1–2 years,"Python, Java",Several times a month,More than 75%,3,3,True,Yes,Female,ORG02,2026-09-01T20:22:41.295000
+R07,Undergraduate student,Less than 1 year,"Python, C++, HTML/CSS",Several times a week,51–75%,2,4,True,Yes,Male,,2026-09-02T15:25:47.580000
+R08,Postgraduate student,Less than 1 year,"Python, C, HTML/CSS",Several times a month,More than 75%,4,4,True,Yes,Male,ORG01,2026-09-02T16:10:50.190000
+R09,Software developer / Software engineer,1–2 years,Python,Several times a week,51–75%,3,4,True,No,Male,ORG03,2026-09-02T21:28:43.284000
+R10,Software developer / Software engineer,Less than 1 year,"Python, Java, Other",Rarely,51–75%,4,3,True,Yes,Male,ORG04,2026-09-02T21:48:38.706000
+R11,Software developer / Software engineer,1–2 years,Python,Rarely,It varies substantially,3,3,True,Yes,Male,ORG03,2026-09-02T22:01:52.889000
+R12,Software developer / Software engineer,1–2 years,"Python, Java, C++",Rarely,It varies substantially,4,4,True,Yes,Male,ORG05,2026-09-05T19:13:07.554000
+R13,Software developer / Software engineer,Less than 1 year,C,Several times a week,51–75%,4,4,True,Yes,Male,ORG01,2026-09-10T11:22:55.825000
+R14,Undergraduate student,1–2 years,Python,Rarely,51–75%,3,3,True,Yes,Male,ORG06,2026-09-10T11:38:20.562000
+R15,Postgraduate student,3–5 years,"Python, C++",Several times a month,51–75%,2,2,True,Yes,Male,ORG01,2026-09-10T12:05:04.794000
+R16,PhD / Research student,Less than 1 year,Python,Several times a month,Less than 25%,2,3,True,Yes,Female,ORG01,2026-09-10T12:13:58.587000
+R17,Postgraduate student,1–2 years,"Python, C++",Rarely,More than 75%,3,3,True,Yes,Male,ORG01,2026-09-10T12:19:51.593000
+R18,Undergraduate student,1–2 years,"Python, Javascript, Java, C++, HTML/CSS",Several times a week,51–75%,3,3,True,Yes,Male,ORG07,2026-09-10T12:56:16.868000
+R19,Undergraduate student,3–5 years,"Python, Java, HTML/CSS",Several times a month,51–75%,4,4,True,Yes,Female,ORG08,2026-09-10T14:29:50.158000
+R20,Undergraduate student,1–2 years,"Python, Java, C, HTML/CSS",Rarely,25–50%,3,3,True,No,Female,ORG09,2026-09-24T20:12:40.168000
+R21,Undergraduate student,1–2 years,Python,Several times a week,25–50%,3,3,True,Yes,Female,ORG09,2026-09-24T20:19:18.173000
+R22,Undergraduate student,1–2 years,Python,Rarely,Less than 25%,2,3,True,Yes,Female,ORG09,2026-09-24T20:41:29.352000
+R23,Undergraduate student,1–2 years,"Python, Javascript, Typescript, Java, C++, C, HTML/CSS",Several times a week,Less than 25%,4,4,True,Yes,Male,ORG01,2026-10-14T11:10:10.934000
+R24,Software developer / Software engineer,3–5 years,"Python, Javascript, Typescript, C++, C",Several times a week,25–50%,4,4,True,Yes,Male,ORG10,2026-10-18T14:13:09.674000
+R25,Software developer / Software engineer,Less than 1 year,"Python, Javascript, C++, HTML/CSS",Several times a month,25–50%,3,3,True,Yes,Male,ORG11,2026-10-18T16:59:36.599000
+R26,Software developer / Software engineer,Less than 1 year,C++,Several times a month,51–75%,3,3,True,Yes,Male,ORG12,2026-10-18T17:06:02.868000
+R27,Undergraduate student,Less than 1 year,C,Several times a week,Less than 25%,3,3,True,No,Male,ORG01,2026-10-18T18:26:18.764000
+R28,PhD / Research student,3–5 years,"Javascript, Typescript, HTML/CSS",Several times a week,25–50%,3,4,True,Yes,Male,ORG01,2026-10-18T23:47:17.394000
+R29,Software developer / Software engineer,1–2 years,Python,Several times a week,25–50%,3,5,True,Yes,Female,ORG13,2026-10-19T00:29:47.935000
+R30,Postgraduate student,3–5 years,"Python, Java, Other",Several times a week,25–50%,4,4,True,Yes,Male,ORG01,2026-10-20T10:45:48
+R31,Software developer / Software engineer,Less than 1 year,"Javascript, Typescript, HTML/CSS",Several times a week,51–75%,3,3,True,Yes,Male,ORG03,2026-10-20T13:29:23
+R32,Postgraduate student,Less than 1 year,"C++, C",Several times a month,Less than 25%,4,5,True,Yes,Male,ORG01,2026-10-20T15:35:28
+R33,Software developer / Software engineer,Less than 1 year,"Python, Javascript, Typescript, Java, C++",Several times a week,Less than 25%,4,4,True,Yes,Female,ORG14,2026-10-20T16:58:03
+R34,Undergraduate student,3–5 years,Python,Several times a week,25–50%,4,5,True,Yes,Female,ORG08,2026-10-20T19:15:50

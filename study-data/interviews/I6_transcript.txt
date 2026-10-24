@@ -1,0 +1,78 @@
+# Meeting Transcription
+
+  Meeting started: 10/20/2026, 2:55:52 PM
+  Duration: 16 minutes
+  Participants: Interviewer, I6
+
+  [View original transcript](https://app.tactiq.io/api/2/u/m/r/2GMLUxXsLM3RZfFDgZcy?o=txt)
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 02:23 I6: Very good actually it definitely should process is since the first thing the really developer really feels how the AI can index f*** how they can. believe some important lines or adds from Manchester things so if it developers
+> 02:53 I6: identify that if he relay it is directly relay on the code blindly. It might be an issue. So the bug injection the detection the committed.
+> 06:00 I6: Yeah, mainly like I find some thought of syntactical tough one seems like we were mostly really like B in general. We don't keep that much syntax in our mind so we generally think the logic events within design. They think they are the logics not this impact particularly, so whenever I issue comes with very very profits. We might miss so that that could be a CO2
+> 12:16 Interviewer: Yeah, okay, got it. So thank you for the government so if if your team adopted it tomorrow. Let's say, what would you change? What would it change something in
+
+  ## Transcript
+
+  00:00 Interviewer: Hello, hello.
+00:00 I6: Hello. Hello.
+00:02 Interviewer: audible So I I6, thank you for giving your time. So basically. I'm trying to collect the feedback about the two recalled which you played the a code quest so I want to ask you some questions you can answer the to these questions.
+00:20 I6: yeah
+00:24 Interviewer: Yeah, thank you. So what is your role? And how do you use AI coding assistant in your day-to-day work?
+00:31 I6: So basically I am working currently and software engineers so regularly. I'll use the coding extent in my day today night but for drawing architectures for.
+00:44 Interviewer: Hi, I'm transcribing this call with my Tactiq AI Extension. https://tactiq.io/r/transcribing
+00:48 I6: For elaborating the idea or generating the fundamental things and to have an open framework for to generate the basic framework of the development platform I coding agent and even I take help with the code AI agents to enhance here.
+01:16 Interviewer: Yeah, got it. So when you use an as extent when it gives you the code what you usually do before you commit it.
+01:25 I6: So one thing as it's not an normal project so I do work for a company so we just can't directly copy paste into the development cell since it goes so many securities so first we will scan it will definitely go through the units unit testing will. And then only will code in the development platform by asking has done but it won't it won't fast every everything so my committing while.
+02:00 I6: publishing or while complicated developing. It will definitely throw an error it definitely show some Development so again.
+02:09 Interviewer: Yeah, got it. So there are two phases line. There is a there is a defensive and there is an attack. So what do you think about this idea and while solving or viral attacking? What were you thinking about this tool or this game?
+02:23 I6: Very good actually it definitely should process is since the first thing the really developer really feels how the AI can index f*** how they can. believe some important lines or adds from Manchester things so if it developers
+02:53 I6: identify that if he relay it is directly relay on the code blindly. It might be an issue. So the bug injection the detection the committed.
+03:08 I6: interesting even we are testing given here. How will it respond how? respond to our modified code to record? It's even healthy developer to access more and make it developer mode feel good. Yeah. I think the boat was too good actually it helps it helps itself.
+03:29 Interviewer: Yeah, yeah hardly. Yeah, got it. So I have some questions regarding defense with a detective so come into the defence phase so when the AA planted a bug in your code right, how did you go about finding it like what was your thought process about for finding a bug or locating a bug?
+03:52 I6: Basically inside my code because that I was in committed. So I'll definitely have some rough idea on my cold water had open or some sort of idea based on that so definitely I have some idea on my code and it might not be like in some cases it out manually like go to the code and then manually fix it in another cases like you. Just are the two helped me a lot like it also gives an example inside we can have we can have the examples beside.
+04:29 I6: examples and we can have an idea that this could be a reason for checking the also it should be but yeah mostly the tool helped me and even some in some case I could manually do it and then some cases examples help illustration site and I as I figured.
+04:48 Interviewer: yeah, yeah, got it so Were there turns very fixing the bug without being sure how you fix the code and if yes?
+05:00 I6: Like some some very trivial some bugs are very. replaced the return statement in particular for the no need to have that much of thought process but electric equal to some out of isolt some 4 4 different things so in the four different things. I only got one return statement this rest of the three were two could only one is one coding was like 14 bug was written statement at that point of time. I did not think about the return statement, but right of the three we need to think why we need to be removed all this.
+05:42 Interviewer: Yeah, so there were four levels right. There is a syntax level bugs semantic level bugs algorithmic bugs and which bugs were the hardest to find and you think about this bugs? And why do you find the that particular level To Be The Hardest
+06:00 I6: Yeah, mainly like I find some thought of syntactical tough one seems like we were mostly really like B in general. We don't keep that much syntax in our mind so we generally think the logic events within design. They think they are the logics not this impact particularly, so whenever I issue comes with very very profits. We might miss so that that could be a CO2
+06:30 Interviewer: Yeah, yeah, got it. So yeah coming to the attack says how did you decide what pakto plant? What do you what did you need to know about the code to plant a particular bug?
+06:42 I6: Yeah, I just said before like I just got figured with the tough one as my syntax, so I just planted structurally and it could really identify the pug and like it got system architected and the platform got a platform got. yeah, I definitely to do that since like I was 12. I thought that how these platform feels whether stuff or not so I just
+07:11 Interviewer: yeah, yeah like how did you find the halogenously doing a plant in a haloted by the code and a MRT
+07:20 I6: really like I just did one thing one one but laterally halogenated means even if it's completely random, but it's not it's the code sometimes some randomness included notebook, but
+07:39 Interviewer: Okay okay, got it. So how did the attacking field different from depending?
+07:46 I6: yeah
+07:47 Interviewer: Like did you find any difference between these two phases?
+07:52 I6: It's like completely a different experience between two phases like one. You should think like a really AI and one you should think. thinking more than Anya in the second case so you need to basically in the attacking phase whenever the software developers plant the bugs or the in. People to be able to see it really the people should think avail away more than they should think in a way that they should the bug.
+08:23 I6: think the very very hard, but whenever comes to the depending part, when? AI index of game and at that point of time we need to have very much clarity or not subject like we need to have very very core basic things and core logic influence to be habits. There are those words two different very good user experiences given. That's a completely different activities.
+08:46 Interviewer: Okay got it. So there is an option called skip in the attack phase in the
+08:47 I6: yeah
+08:52 Interviewer: different phase you you should definitely solve all the four questions but in that case we also provided this keep for those questions, so if you skip any attack turns, why did they skip that and what is your thought process behind okay?
+09:10 I6: A while performing I do it not I think I had not do it actually so but basically turns are useful when like they are rushing out of time and we manually invent. We need to basically attacking pages learning phases knowledge, so means we need to have a very principles for depending attack is basically we are learning new depending basis basically what we learn we need to educate them and we need.
+09:40 I6: get clarity on them. So these are two different so according to time or some time because of some time framework. We might see patterning. Yeah, but it's very good to have that we can learn much more things with AI can do yeah. We can learn all the things. Yeah.
+10:00 Interviewer: Yeah, god got it so coming to the usefulness and ease of shoes. How useful would this be in your team real review process. What is your thought on it?
+10:08 I6: Whenever it's directly into the pr. It's directly people don't know anything since they usually rely on whenever the time runs the people rely copy and then paste and it will go to the PR1 del merch it so while. Deploying file declined the final application there will be a hell amount of errors very huge amount of errors at the deployment rate at the point. They will be running out of time and there is no time to exit all those things but the time knowledge without knowing the knowledge.
+10:58 I6: this is very helpful for us. It's very very useful the industry people so they it refuses the ample amount of time so in the beginning phase only for rectifying error. That's the only keep the Q2
+11:14 Interviewer: garden Yeah, so what did you like the most in the toll? He did the workflow or is it the Y is it the setup or is it the idea with attack or Defense
+11:28 I6: Is there anyone it easier option to have an all of these above? Can you give an option with all of this ever? It's all of their way. I just feel it all of literally since because like the UI is scam would be dark dark mode is to
+11:40 Interviewer: yeah
+11:44 I6: literally to fillet in its very smooth. So and if it got every feature and every button enabled with proper color settings fragments. Everything is too good and the workflow is absolutely the tool has clear demonstration it got clear illustrations it got examples over there so Really the investigative complete they can learn they can. it's awesome.
+12:16 Interviewer: Yeah, okay, got it. So thank you for the government so if if your team adopted it tomorrow. Let's say, what would you change? What would it change something in
+12:28 Interviewer: this tool one one change?
+12:34 I6: Might be with the with the time concerned we can allow it some yeah. reduce one attacking patient you can add more depending that could be.
+12:50 Interviewer: Okay okay, got it so by adding more depending questions and reducing attacking portions there might be some latency low latency.
+13:01 I6: yeah
+13:02 Interviewer: Okay got it. Got it so coming to the game and what did you notice about the bad sand toasts confetti streets leaderboard like did any of these change your way of playing the game or or let's say you wanna comment play again and again or you get irritated you got irritated.
+13:24 I6: yeah Whenever it is motivating because I am saying this motivating well sentence is basically whenever we sort of like. Whenever we solve a flag you know the detector participation. We are getting a very congratulations to proceed. So it does not demotivating the under code. You are just giving the only uses code and you are just asking whether you know this code or not. So it's not frustrating then another state and the team score the percentage or delayed positions. These are all are motivating. What to do if we some sort of competition drives competition driving.
+14:25 Interviewer: Yeah, yeah, so what is the feedback on this overall tool and what do you think about this and let's Honor rating of 5? What would you rate this tool?
+14:39 I6: It's too good. It's absolutely fine and absolutely true. chilling so so it's absolutely fabulous, so I need to say if it is 10 as you can so it's too good. I guess there are no there are no significant changes. I and that's my opinion different also you are not giving to find the bugs in 201.
+15:18 Interviewer: yeah
+15:39 I6: 3 learning process we'll keep our basics very good well using this tool and amount of time during the development during the deploying. phrases and they need to start so if it helps us a lot.
+15:59 Interviewer: Yeah, yeah, got it. Got it. Yeah. Thank you for your time and support to this too. Yeah. Thank you.
+  

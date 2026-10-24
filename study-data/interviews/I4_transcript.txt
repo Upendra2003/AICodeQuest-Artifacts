@@ -1,0 +1,62 @@
+﻿Meeting Transcription
+Meeting started: 10/20/2026, 2:10:15 PM
+Duration: 14 minutes
+Participants: Interviewer, I4
+
+
+## Highlights
+
+
+
+
+
+
+Transcript
+00:00 Interviewer: Hi I4, can you hear me properly?
+00:05 I4: Yeah Interviewer, I can hear you clearly. Can you hear me?
+00:09 Interviewer: Yeah, loud and clear. Thanks for taking the time to join this feedback session today.
+00:15 I4: Happy to help.
+00:18 Interviewer: Hi everyone, this is an automated message to let you know my Tactiq extension: https://tactiq.io/r/transcribing is transcribing this meeting for me so I can give my full attention to you.
+00:28 I4: Sounds good.
+00:30 Interviewer: So as you know, we're conducting this user study to gather feedback on Code Quest, how developers interact with the attack and defense phases, and where we can improve before deploying it in a production setup.
+00:45 I4: Yeah, I played through a few rounds yesterday, so I have some thoughts ready for you.
+00:52 Interviewer: Great! To kick things off, what is your current role, and how do you integrate coding assistants into your everyday workflow?
+01:03 I4: I work primarily as a backend engineer. In my day-to-day, I use assistants like Copilot and Claude for drafting API routes, writing repetitive boilerplate, and quick refactoring.
+01:20 Interviewer: Okay, nice. And when the assistant generates a piece of code for you, what steps do you take before committing it to your branch?
+02:00 I4: I never commit raw AI output directly. I mainly rely on AI for writing boilerplate code and generating repetitive test suites, but I always do a line-by-line walkthrough before merging anything into main.
+02:22 I4: I write unit tests, check edge cases manually, and make sure it aligns with our team's design patterns and logging standards.
+02:35 Interviewer: That makes sense. Now coming to Code Quest itself, what was your initial impression of the two-phase mechanic—the attack phase and the defense phase?
+02:48 I4: Honestly, I found the concept pretty fresh. Most tools just evaluate if you can catch a bug, but making the user actively plant a bug forces you to understand the execution flow deeply.
+03:05 Interviewer: Right, right. Let's talk about the defense phase first. How did you approach finding the bugs that the AI planted in your code?
+03:18 I4: I usually scan the input transformations first—how parameters are passed into lower-level functions. Then I follow the return pathways.
+03:32 Interviewer: Did you read through the entire code snippet or rely more on intuition and test case outputs?
+03:42 I4: A bit of both. If it's a short snippet, I trace it mentally. But for multi-branch logic, in the defense phase, the hardest ones for me were boundary condition errors—like off-by-one issues or improper null handling—because the code looks syntactically clean at first glance.
+04:55 Interviewer: Yeah, those edge-case bugs can be tricky when the code structure looks plausible.
+05:05 I4: Exactly. Syntax errors are trivial to catch, but algorithmic flaws take real effort.
+05:15 Interviewer: What about the attack phase? How did you decide what kind of bug to inject into the system?
+05:25 I4: Planting bugs in the attack phase felt like flipping the script. I tried sneaking in subtle logic flaws rather than obvious syntax errors to see if the LLM could catch them.
+05:45 I4: For instance, changing an strict inequality or dropping an update step in an accumulator variable.
+06:02 Interviewer: Nice strategy! Did you use the skip button during any of the attack turns?
+06:12 I4: Yeah, I skipped a couple of attack turns when I felt the underlying AI-generated code was already too trivial or when my confidence score reached around 75%. At that point, planting another bug felt repetitive.
+06:32 Interviewer: Okay, got it. That aligns with what a few other participants mentioned as well.
+06:40 I4: One thing I noticed though—sometimes the evaluation response felt a bit delayed or the test cases didn't fully execute complex class structures.
+06:55 Interviewer: Ah yes, that's something we're actively working on. Yeah, latency is a big constraint for us right now when running real-time execution environments, which is why we rely on lighter open-source models for the web demo.
+07:22 Interviewer: For production, we plan to move to dedicated API endpoints with Claude or GPT-4o to handle dynamic test case generation much faster.
+07:35 I4: That would make a huge difference, especially if developers can run full test suites directly in the tool.
+07:48 Interviewer: Moving to team adoption—how useful do you think a tool like Code Quest would be in a real enterprise software team?
+08:02 I4: I think it's very useful for training and code review hygiene. It forces devs to pay attention to AI outputs instead of blindly accepting recommendations.
+08:20 I4: However, if you force developers to play it on every single commit, fatigue will set in pretty fast.
+08:32 Interviewer: Exactly. We don't want developers to get exhausted by mandatory friction.
+08:40 I4: Maybe triggering it on PR approvals or high-risk repository changes would be a sweet spot.
+08:52 Interviewer: That's a solid suggestion. What about the gamification features like the leaderboards and badges? Did those motivate you?
+09:05 I4: They're cool for team engagement! A quarterly leaderboard within a engineering squad could spark some friendly competition.
+09:20 Interviewer: Nice. If your team were to adopt this tomorrow, what is the single biggest change or feature you would want to see?
+09:35 I4: If my team adopted this, the first thing I'd ask for is a VS Code extension interface so developers don't have to context-switch away from their primary editor.
+09:55 Interviewer: Understood. Keeping the developer inside their IDE environment is crucial for workflow continuity.
+10:10 I4: Exactly. If it's embedded right into the IDE workflow, adoption will be seamless.
+10:22 Interviewer: Awesome feedback, I4. Is there anything else you'd like to share or suggest regarding the UI or overall design?
+10:35 I4: Overall UI was clean and intuitive. Just fix the latency on test generation and bring it into the editor, and you've got a really promising product.
+10:50 Interviewer: Thanks a lot for your insights today, I4. This will really help us refine our paper and the next iteration of the tool.
+11:02 I4: Any time, Interviewer! Good luck with the deployment.
+11:10 Interviewer: Thank you, have a great day!
+11:14 I4: You too, bye.

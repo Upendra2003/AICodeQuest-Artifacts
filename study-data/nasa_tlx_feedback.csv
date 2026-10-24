@@ -1,0 +1,35 @@
+pid,submitted,mental,physical,temporal,performance,effort,frustration,contributor,satisfaction,clarity,loc_opinion,questions_opinion,threshold_opinion,feedback
+T01,2026-10-14T12:26:44.337000,2,2,2,4,1,1,Mental Demand,5,5,50,Good,50,"Good attempt, the tool is amazing works as a first level abstraction in organizations before the review meetings happen."
+T02,2026-10-18T12:30:23.245000,4,3,3,4,3,1,"Temporal Demand, Effort",5,4,50,It is good,60,The tool is good enough to self assess the user 
+T03,2026-10-18T14:14:44.442000,4,2,3,4,4,4,"Mental Demand, Physical Demand, Temporal Demand",5,4,50,Fine,50,Good enough to test the one's own development skills
+T04,2026-10-18T16:20:08.386000,5,5,4,4,3,3,Mental Demand,5,5,60,6,0.9,Awesome
+T05,2026-10-18T16:56:55.946000,1,1,1,5,3,1,Effort,5,5,30,no. Its is enough!!.,0.5,Its awesome!!!. The UI is too good!!. The Game has the very potential idea.
+T06,2026-10-18T17:02:23.806000,3,3,2,5,4,2,"Mental Demand, Effort",5,4,Having 50 - 60 lines of code changes would be better for the trigger of the game.,It is good for testing the understanding of code and trading off with the developers effort to pass the validity of understanding,Atleast 50% threshold could reliably detect the actual understanding of the code changed,The UI is quite intutive and also the idea of testing the developer using the bug injection method on both sides that is AI and human injected bugs will be helpful metric for understanding the code.
+T07,2026-10-18T19:22:13.451000,3,3,3,3,3,3,Physical Demand,3,5,2,No,No,Good
+T08,2026-10-18T21:50:40.123000,4,1,1,5,3,1,"Mental Demand, Effort",4,5,10,"It gave me same kind of code for debugging, would be better to continue question count if same thing happens to others.",0.8,"Overall a good experience, can be more challenging. Thank you "
+T09,2026-10-18T21:51:16.180000,5,5,5,5,5,5,Mental Demand,5,5,60,good,60,very usefull
+T10,2026-10-18T21:51:32.346000,3,1,3,4,3,3,"Mental Demand, Temporal Demand, Frustration Level",4,4,70,3,70,Good
+T11,2026-10-18T22:06:07.046000,3,1,2,5,2,2,Mental Demand,4,4,In multiples of 10,Good,This threshold is good,Good 
+T12,2026-10-18T22:12:14.269000,4,1,2,5,4,3,"Mental Demand, Physical Demand, Temporal Demand, Effort, Frustration Level",5,5,50,NO(8),99,Very informative and good tool for developers.
+T13,2026-10-18T22:12:30.175000,2,2,3,4,2,2,"Mental Demand, Effort, Frustration Level",4,4,10 or more ,"no, it is good.",0.8,it was good playing with the tool
+T14,2026-10-18T23:38:28.832000,3,5,3,4,4,1,"Mental Demand, Temporal Demand",5,5,6,it's good,0.8,it's really good 
+T15,2026-10-18T23:44:39.897000,4,2,2,4,3,4,Mental Demand,4,4,40,No,55,Reliable and great for initial screening of the code review
+T16,2026-10-19T00:43:41.579000,5,2,2,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,Good 
+T17,2026-10-19T10:58:17.610000,4,1,1,4,4,1,"Mental Demand, Effort",5,5,60,Good,50,"Really interesting idea! A tool that assesses developers’ understanding of AI-generated code by identifying potential bugs in PR changes is a great way to encourage code ownership, improve code quality, and ensure developers truly understand what they ship. "
+T18,2026-10-19T11:29:45.677000,5,2,2,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,It is excellent 
+T19,2026-10-19T11:31:49.127000,5,2,2,5,3,1,Effort,5,5,5,0,Good,Nothing 
+T20,2026-10-19T11:33:27.877000,5,2,2,5,3,1,Effort,5,5,50,Good,50,Excellent 
+T21,2026-10-19T11:34:40.017000,5,2,2,5,3,1,Effort,5,5,50,Good ,50,Super
+T22,2026-10-19T11:34:50.385000,3,3,3,3,3,1,Effort,5,5,50,Good,50,Very good 
+T23,2026-10-19T11:36:02.357000,4,1,1,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,This may not be good when you really have less time and want to push something into the codebase and see how the output changes
+T24,2026-10-19T11:36:53.109000,5,5,5,4,5,1,"Mental Demand, Effort",5,5,50,Good,50,All good 
+T25,2026-10-19T11:43:18.721000,5,2,2,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,Good
+T26,2026-10-19T12:04:11.506000,4,2,2,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,Great tool overall! The concept of gamifying PR verification is highly innovative. The 50-line trigger and passing threshold feel well-balanced and don't add unnecessary friction to the development workflow.
+T27,2026-10-19T12:19:16.551000,5,1,2,4,2,1,"Mental Demand, Effort",5,5,50,Good,50,Niceee
+T28,2026-10-19T12:33:55.092000,3,2,1,5,3,1,Effort,5,5,50,Good,50,Good
+T29,2026-10-19T12:49:07.494000,5,2,2,5,3,1,"Mental Demand, Effort",5,5,50,Good,50,The tool is novel and innovative 
+T30,2026-10-19T13:26:54.275000,4,2,3,4,4,1,"Mental Demand, Effort",5,5,50,Good,50,Nothing
+T31,2026-10-19T13:35:40.821000,5,5,4,4,3,1,Mental Demand,5,5,50,Good,50,Nice
+T32,2026-10-19T13:54:29.749000,5,2,2,5,2,1,"Mental Demand, Effort",5,5,50,Good,50,Overall good
+T33,2026-10-19T18:15:55.830000,5,5,5,4,5,1,Effort,5,5,50,Good,50,Good
+T34,2026-10-19T18:16:46.824000,5,2,1,4,3,1,"Mental Demand, Effort",5,5,50,Good,50,it is a good and useful tool

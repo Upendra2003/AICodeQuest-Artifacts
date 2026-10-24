@@ -1,0 +1,127 @@
+# Meeting Transcription
+
+  Meeting started: 10/19/2026, 1:00:33 PM
+  Duration: 14 minutes
+  Participants: I3, Interviewer
+
+## Highlights
+
+> 01:38 I3: I use coding assistants to explore possible implementations, but I try to define the expected behaviour and constraints before asking for code.
+> 03:12 I3: I usually check the assumptions first, then inspect boundary cases and run the smallest test that can expose a problem.
+> 05:18 I3: Tracing the state changes helped me more than scanning every line independently.
+> 08:23 I3: Hallucinated or unsupported code was challenging because it could look plausible while relying on a function or behaviour that wasn’t actually available.
+> 11:46 I3: I’d make the tool more useful by showing a short explanation and letting users validate a fix with test cases after submitting.
+
+## Transcript
+
+00:00 Interviewer: Hi I3, can you hear me okay?
+
+00:05 I3: Yes, I can hear you clearly.
+
+00:09 Interviewer: Great, thanks for taking the time. I’m going to ask about your experience with AICodeQuest. There are no right or wrong answers; I’m interested in what you noticed and how you approached the tasks.
+
+00:23 I3: Sure, go ahead.
+
+00:27 Interviewer: The purpose is to understand how people interact with the tool and what we could improve before using it in a broader setting.
+
+00:38 I3: Okay, that makes sense.
+
+00:42 Interviewer: To begin, what is your role, and how do you use coding assistants in your usual work or projects?
+
+00:52 I3: I use them mostly to explore different ways of implementing something, especially when I’m not fully familiar with an API or when I need a quick prototype. I usually break down the requirement first and then ask for a specific piece of code. I still review the output because the assistant may make assumptions that don’t match the project.
+
+01:18 Interviewer: What do you usually check before accepting the generated code?
+
+01:25 I3: I check whether it meets the requirement, whether it uses the right APIs, and whether there are edge cases that haven’t been handled. I also look at readability. If the change is important, I’d run tests rather than relying only on the explanation the assistant gives.
+
+01:45 Interviewer: Can you recall a moment from AICodeQuest that stood out to you?
+
+01:52 I3: The most interesting part was that the task didn’t end when I found a bug. I also had to introduce a bug myself. That made me think about what makes a defect subtle. A mistake that crashes immediately is easy to notice, but a small change in a condition can be much harder to detect.
+
+02:18 Interviewer: During the defense phase, how did you go about finding a bug planted by the AI?
+
+02:26 I3: I first tried to understand what the function should do. Then I followed the values through the main branches and checked whether the conditions made sense. I found it useful to choose a small input and mentally trace the result. If the output didn’t match the expected behaviour, I went back to the condition or update that could explain the difference.
+
+02:52 Interviewer: Did you inspect the entire function or focus on suspicious lines?
+
+02:59 I3: A bit of both. I needed the surrounding context to know what was suspicious, but once I had a hypothesis, I focused on the relevant section. Looking at one line without understanding the rest can lead to a wrong fix.
+
+03:17 Interviewer: Were there times when you made a change without being completely certain it was correct?
+
+03:25 I3: Yes, especially when I had a plausible explanation but couldn’t execute the code to confirm it. In a real development setting, I’d want to test the original failing case and then check a normal case as well. A change that fixes one example could still break another.
+
+03:48 Interviewer: Which bug category did you find most difficult: syntax, semantic, algorithmic, or hallucinated code?
+
+03:56 I3: Hallucinated code was difficult in a different way. The code can look quite normal, but it may refer to an API or method that doesn’t exist or assume a behaviour that the library doesn’t provide. You need to verify the environment and available functions, not just reason about the logic.
+
+04:20 Interviewer: How did you decide whether something was genuinely hallucinated rather than simply unfamiliar?
+
+04:27 I3: I’d check the surrounding code and the expected library usage. If I had access to documentation or an executable environment, I’d verify the function name and its return type. In the game, without that support, I had to make a judgement from the code context, so some uncertainty remained.
+
+04:51 Interviewer: Let’s move to the attack phase. How did you decide what bug to introduce?
+
+04:58 I3: I started by identifying the function’s intended behaviour and the assumptions it made. Then I looked for a small change that would violate one of those assumptions, such as changing a boundary comparison, skipping an update, or returning the wrong value in one branch. I wanted the defect to be realistic enough that someone would need to reason about it.
+
+05:26 Interviewer: Did you find attacking different from defending?
+
+05:32 I3: Yes. In defense, I was trying to explain unexpected behaviour and locate its cause. In attack, I was predicting how a particular change would affect the program. I had to understand the code well enough to create a defect that was meaningful rather than just breaking the syntax.
+
+05:55 Interviewer: Did you skip any attack turns? If so, why?
+
+06:02 I3: I’d skip if I couldn’t identify a useful change or if I didn’t understand the function’s purpose. Making a random edit would not really test the assistant’s ability to detect a bug. I was more confident when the input, output, and control flow were clear.
+
+06:22 Interviewer: How useful do you think AICodeQuest could be in a team’s development or code-review process?
+
+06:30 I3: I think it could be useful for training people to review AI-generated code more critically. It encourages you to ask what could go wrong rather than just checking whether the code looks clean. I wouldn’t treat it as a substitute for tests or normal review, but it could complement them.
+
+06:55 Interviewer: What might prevent developers from using it regularly?
+
+07:02 I3: Time and repetition could be issues. If developers have to complete many similar tasks, they may lose interest. The tool should also explain the value of each task and offer different levels of difficulty so experienced users aren’t stuck with only basic examples.
+
+07:23 Interviewer: How would you rate the overall experience out of five?
+
+07:29 I3: I’d give it around four out of five as a concept. The two-phase approach is useful and makes you think about code from different perspectives. Better execution support and more detailed feedback would make the experience stronger.
+
+07:48 Interviewer: What got in your way while using the tool? Was it the interface, setup, or workflow?
+
+07:56 I3: The main limitation for me was validating my reasoning. I could inspect the code and make a decision, but being able to run a small test or see a targeted example afterwards would help me know whether I understood the behaviour correctly. That would make the experience feel less like guessing.
+
+08:21 Interviewer: If your team adopted it tomorrow, what would you change first?
+
+08:28 I3: I’d add a post-attempt explanation with one or two test cases. It could show the expected output and the output produced by the buggy version, then explain the underlying issue. I’d keep those details hidden until the user submits an answer so the task remains challenging.
+
+08:53 Interviewer: Would you want the tool to track your performance over time?
+
+08:59 I3: Yes, if the tracking was focused on learning rather than just ranking people. For example, it could show which bug categories I detect consistently and which ones I tend to miss. That would help me choose what to practise next.
+
+09:20 Interviewer: What did you think about the badges, points, or leaderboard?
+
+09:27 I3: They can add some motivation, particularly in a classroom or team exercise. But I wouldn’t want the score to reward speed at the expense of careful reasoning. A person who takes a little longer and validates the fix may be doing better engineering than someone who answers quickly.
+
+09:52 Interviewer: Would you play it again? What would bring you back?
+
+09:59 I3: I’d return if the tasks were varied and the tool showed progress. New examples, increasing difficulty, and explanations for mistakes would make it worthwhile. It would also be useful to practise on code that resembles the languages and frameworks I actually use.
+
+10:21 Interviewer: Did the two-phase structure change how you think about AI-generated code?
+
+10:28 I3: It made me consider how easily a small change can alter behaviour, even if the code still looks reasonable. Creating a defect yourself forces you to understand which parts of the function are important. That understanding can also help when reviewing generated code.
+
+10:50 Interviewer: Is there anything else we should consider before deploying it in a real setting?
+
+10:57 I3: I’d make sure the examples are reliable and the feedback is technically accurate. If a tool teaches people to trust incorrect explanations, that would be counterproductive. It should be clear about what is being tested and should encourage users to verify fixes rather than simply accept the game’s answer.
+
+11:21 Interviewer: What did you particularly like about the tool?
+
+11:27 I3: I liked that it makes code review active. Instead of just reading a code snippet and answering a question, you have to make decisions and explain them through your actions. The attack phase is especially interesting because it encourages you to think about how defects arise.
+
+11:49 Interviewer: Any final suggestions or questions?
+
+11:55 I3: One suggestion is to let users compare their reasoning with the explanation after a round. A short summary of the bug, why it matters, and which test case exposes it would be helpful. I’d also keep the interface focused so the game elements don’t distract from understanding the code.
+
+12:18 Interviewer: Thanks, I3. That’s useful feedback. Anything else you’d like to add?
+
+12:25 I3: No, those are my main thoughts. I think the concept has potential as a learning tool, especially if the validation and feedback are improved.
+
+12:38 Interviewer: Great, thank you for your time and for sharing your feedback.
+
+12:44 I3: Thank you.

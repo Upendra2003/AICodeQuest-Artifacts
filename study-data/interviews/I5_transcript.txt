@@ -1,0 +1,120 @@
+# Meeting Transcription
+
+  Meeting started: 10/20/2026, 1:54:33 PM
+  Duration: 14 minutes
+  Participants: I5, Interviewer
+
+
+    
+
+  
+
+  
+    ## Highlights
+
+    > 10:47 I5: important interesting. yeah
+> 10:53 Interviewer: Okay got it. So let's say if you team adopted it tomorrow. Let's say you you are organization adopted tomorrow. What would it change the first? What will change
+> 13:18 I5: I think much actually but I would say. it is important to check like you have it is important nowadays to
+
+  ## Transcript
+
+  00:00 Interviewer: Hey, hi, I5 good afternoon.
+00:04 I5: Good afternoon.
+00:07 Interviewer: Thank you for your time and thank you for this meeting. I hope I am not disturbing your time. Okay, so basically this meeting is for the tool which we developed and you also played the game right the a code quest, so basically I want feedback from the US
+00:26 I5: yeah
+00:31 Interviewer: who already used the tool so that I can improve the tool and deploy it in real world software organization so I have a set of questions and you can basically answer on my one. Can we start to can we start?
+00:44 I5: okay yeah
+00:48 Interviewer: Okay done, so my first question is what is your role? And how do you use a coding assistant in your day to day work?
+00:54 Interviewer: Hi, I'm transcribing this call with my Tactiq AI Extension. https://tactiq.io/r/transcribing
+00:57 I5: Basically offered developer in working at [company] and I use it tools to write code solve problems they work errors. Improve efficiency etc.
+01:12 Interviewer: okay Okay, so my next question is so when an a assistant gives you code right. What is usually do before you commit it.
+01:24 I5: On yesterday, I check the logic whether it's correct or not. Compensate tested with different outputs inputs like some manuals and some manual tests. before committing
+01:39 Interviewer: Okay okay, so can you can you tell me about the phases so there are two phas. right? There is a defense phase and there is an attack phase. So how do you
+01:51 I5: yeah
+01:52 Interviewer: perceive it like what what happened during these two phases and what were you thinking about the tool?
+02:04 I5: I like the defense because Defenses like we need to search the Works some some summer easy like basically. They will change up something tax so that would be easy some some more change the logic so checking the logic protect where some knowledge to. the code and the code base and so I enjoyed fixing that defense Def and attacking us also a bit interesting we can change the logic entire logic or some parts of the logic.
+02:47 Interviewer: Yeah, yeah, got it. So you basically enjoyed more of Taken scale rather than a typo right.
+02:54 I5: yeah
+02:54 Interviewer: Okay okay so coming to the questions on defense day, so when the a planted a bug in your code right, how did you go about finding it like what was your thought process for finding the bug in that particular function?
+03:13 I5: Initially, I checkable I take this syntax first whether it's index is correct or not next I go to the logic so I check the code step by step and then it would be a basic logic error or sometimes. It would be a complex like a logic would be changing some. entirely so if it go step by step
+03:40 Interviewer: okay Yeah, like you you will frustrate the action text. We will first check this syntax of the whole code and then you try to look at the bug right you will go
+03:51 I5: yeah
+03:53 Interviewer: you will go step by step and line by line.
+03:55 I5: Yes.
+03:56 Interviewer: Yeah, yeah, so did you read the whole function or did you run it on your head checking for test cases like in your head only like did you do something like that? For finding the actions.
+04:12 I5: um Yeah, like some logic would be easy so we can dry down it in our mind some
+04:21 Interviewer: okay
+04:23 I5: requires some require some extra like. Condenser go to some other like back to the code base and then check.
+04:33 Interviewer: Okay understand, so what the were they turn where you fix it the bug without being sure why your pics work and how often did it actually happen?
+04:50 I5: Can I repeat the question?
+04:52 Interviewer: So whenever fixing the bugs right so how often did you feel that it was a lucky?
+04:55 I5: yeah
+05:02 Interviewer: It was a lucky like how often did you get lucky while you were playing the defense Days Like You randomly located the located something and it click and it worked.
+05:16 I5: okay just
+05:18 Interviewer: yeah yeah, you just guessing there instead of reading the code or instead of traveling the code line when I
+05:30 I5: Not actually.
+05:32 Interviewer: okay
+05:32 I5: It doesn't work like.
+05:34 Interviewer: Yeah, exactly okay okay, so which bugs were hardest to find for you and why so let's say there are four phases 4 levels writer the first one is intact syntax and semantic errors and algorithmic errors and halogenated er. level did you find most difficult to find the bugs?
+06:01 I5: Sometimes logic logic is differently like some educas misses everything would look fine but some education missed out so logical errors.
+06:14 Interviewer: Okay you you mean to say syntax are semantic errors were significant.
+06:18 I5: mathematics yeah semantic yeah
+06:23 Interviewer: Okay okay, got it. So let's move on to the attractions question like how did you decide what to plant and what did you need to know about the code to plant? So let's say you played a type size writer. How did he actually planted the bug into the code and what was the knowledge required to plant the hug or you just randomly implanted book.
+06:50 I5: Yeah, initially, I randomly like I played in play It Like A gameplay again. Just change some lines of code and thought whether it works are not. After a few times I thought of like changing the whole logic. Will it catch or
+07:10 Interviewer: Yeah, okay.
+07:11 I5: not or sometimes? I'll make the conditions different. I change my strategy after some games.
+07:24 Interviewer: Okay god, did you did you feel like did attacking field different from defending and if yes, then what weight is different?
+07:35 I5: Are different depends is different I will fix the bugs there and I should find the Works here. I should here I should create bugs right.
+07:48 Interviewer: yeah
+07:49 I5: create errors or mistakes.
+07:52 Interviewer: yeah
+07:53 I5: with different
+07:54 Interviewer: Okay okay, so you so if you skip any attack turns if yes, then why did you? Like we also provided the option skip button for the attack.
+08:11 I5: Yeah, I already told you right. I feel debugging more interesting than attacking
+08:13 Interviewer: yeah
+08:17 I5: so sometimes I'll skip back face.
+08:23 Interviewer: okay
+08:23 I5: I just like like the bugging more.
+08:26 Interviewer: Okay you like debugging mode. That's the sum of the attack some of that okay.
+08:30 I5: yeah
+08:33 Interviewer: That's interesting now, let's
+08:35 I5: Basically to save the time you can think of like.
+08:38 Interviewer: Say that ok. Get to save the time you basically skip that address.
+08:41 I5: yeah
+08:43 Interviewer: Okay got it. Got it so coming to the usefulness and ease of use so how useful would this be in your teams real review process let's say you're working in the organization. Let's say if your team you team is reviewing some code then how useful this tool would be. And what would be the rating for this tool? okay
+09:10 I5: It could be useful. Like the deba the defense phase would be very useful I guess because you should know the bugs right you should be able to find the bugs. So that would be very useful and attacking you can some someone prefers attacking. like you can play it like a game that you want to play with the Cook
+09:35 Interviewer: So it will be an interactive game so if you plan at okay.
+09:38 I5: yeah it's you just want to play with the game with AI to improve your debugging
+09:45 Interviewer: okay
+09:46 I5: skills some
+09:52 Interviewer: Yeah, yeah cotton got it. So what did you like the most in the tool? that like the UI or the workflow or the setup or what did thoughts on while playing the game and what did you got the motion when you play that game?
+10:12 I5: like I basically like to challenge the AI like it's Like a is you know intelligent right there more intelligent in the sense of
+10:24 Interviewer: yeah
+10:27 I5: contacts. They have every everything stored. So it would be a challenging for humans like us to like play game on intellectual like food everything so yeah playing that would be interesting or challenging if you would say I find that
+10:47 Interviewer: Okay, you okay, you'll find that pretty interesting.
+10:47 I5: important interesting. yeah
+10:53 Interviewer: Okay got it. So let's say if you team adopted it tomorrow. Let's say you you are organization adopted tomorrow. What would it change the first? What will change
+11:01 I5: okay
+11:05 Interviewer: in the store what the one thing you will change?
+11:14 I5: I don't know I think I think it's fine you can sometimes you can. like to make you can make a Tactics also mandatory.
+11:25 Interviewer: okay
+11:26 I5: minimize the rounds minimize number of terms in
+11:28 Interviewer: okay I mean amazing camera of questions in attacking plays and maybe removing the skip button for that. I would be great.
+11:40 I5: yeah
+11:42 Interviewer: God got it okay in the game elements. What did you notice about the bad sand toast confetti streak and leaderboard like did these change over behavior or did these change over motivation to play the game or commit more and more and code and push more and more and code did anything feel like that did. effective or cognitive part of the brain?
+12:18 I5: Of yeah, you can say as for that because it made the game interesting and motivated like your competitive right. You should your computer with others so you can.
+12:29 Interviewer: yeah
+12:31 I5: Basically perform well then others that you should extrapolation.
+12:33 Interviewer: yeah So for for extra motivation and let's say for competing with others these two would be great so basically we and like within teams there will be several
+12:43 I5: yeah
+12:48 Interviewer: developers and competing among them would be great idea so that we introduced the leaderboarding.
+12:55 I5: Yeah, great. I find it motivating and like competing. Yeah, that would be good.
+12:58 Interviewer: yeah Yeah, got it. Got it. So is there any feedback final feedback you want to give or did I miss anything that you want to share it could be helpful for that.
+13:18 I5: I think much actually but I would say. it is important to check like you have it is important nowadays to
+13:30 I5: code like which I gives you. You don't want to copy and paste by your you don't want to trust AI without any reviewing so. It might be necessary in an upcoming.
+13:49 Interviewer: Yeah, yeah. Got it. Got it so yeah.
+13:54 I5: So a conquest helps this.
+13:58 Interviewer: Okay so Honor on a scale of 5 what would the rating you would give to this tool?
+14:08 I5: I would give moral around 4 4 out of
+14:13 Interviewer: okay
+  

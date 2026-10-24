@@ -1,0 +1,136 @@
+# Meeting Transcription
+
+  Meeting started: 10/20/2026, 2:54:33 PM
+  Duration: 14 minutes
+  Participants: I2, Interviewer
+
+
+## Highlights
+
+> 01:42 I2: I mostly use coding assistants to get a first implementation or to understand an unfamiliar library, but I still try to decide the structure and requirements myself.
+> 03:05 I2: Before I accept generated code, I check whether it handles edge cases and whether the variable names and control flow match what I intended. I also run tests when I can.
+> 05:30 I2: I usually start debugging by tracing the function with a small example. Looking only at the changed line can be misleading if the issue comes from an earlier condition.
+> 08:40 I2: The algorithmic bugs were the most challenging because the code could look reasonable and still produce the wrong result for a particular input.
+> 12:05 I2: I could see this being useful as a learning or review activity, but I would want the tool to explain the result and let users run their own test cases.
+
+## Transcript
+
+00:00 Interviewer: Hi I2, can you hear me clearly?
+
+00:06 I2: Yes, I can hear you. Can you hear me?
+
+00:10 Interviewer: Yes, all good. Thanks for joining. I’ll ask a few questions about your experience with AICodeQuest. There are no right or wrong answers; I’m interested in how you experienced it.
+
+00:25 I2: Sure, sounds good.
+
+00:29 Interviewer: Just to give you some context, we’re collecting feedback to understand how people interact with the tool and how it might be improved for real-world use.
+
+00:42 I2: Okay, got it.
+
+00:46 Interviewer: First, what is your role, and how do you normally use coding assistants in your day-to-day work or projects?
+
+01:00 I2: I mostly use them when I need a quick starting point, like writing a helper function, understanding an unfamiliar library, or figuring out why an error is happening. I usually describe the expected behaviour first and then ask for an implementation. I don’t treat the first answer as final, though. I still need to understand how it works before using it.
+
+01:29 Interviewer: So you use the assistant to speed up implementation, but you still want to understand the logic yourself?
+
+01:36 I2: Yes, exactly. If I can’t explain the code, I’m not comfortable depending on it.
+
+01:42 Interviewer: When an assistant gives you code, what do you usually do before committing it?
+
+01:49 I2: First I check whether the solution actually matches the requirement. Then I look at edge cases, variable names, and whether the code is doing extra work unnecessarily. If it’s a small function, I’ll try a few inputs manually. For a bigger change, I’d prefer to run unit tests and check that existing behaviour hasn’t changed.
+
+02:15 Interviewer: Do you follow a fixed checklist, or does it depend on the code?
+
+02:21 I2: It depends on the task. For input-processing code I pay more attention to empty or invalid inputs. For loops and conditions, I check boundary values. If the code interacts with another component, I also look at the assumptions it makes about that component.
+
+02:42 Interviewer: Can you tell me about a part of AICodeQuest that you remember particularly well? What were you thinking during that turn?
+
+02:51 I2: The part I remember most is having to switch from finding a mistake to deliberately introducing one. When I’m debugging, I’m trying to restore the intended behaviour. In the attack phase, I had to think about which small change would create a meaningful failure without making the code obviously broken. That felt like a different kind of exercise.
+
+03:20 Interviewer: Let’s talk about the defense phase. When the AI introduced a bug, how did you try to find it?
+
+03:29 I2: I started by reading the function and identifying what it was supposed to return. Then I traced a small example through the conditions and variables. I paid attention to places where a value was changed or where a condition might exclude a valid case. If something looked suspicious, I compared the expected result with what the code seemed likely to produce.
+
+03:58 Interviewer: Did you read the whole function carefully, mentally execute it, or mostly look for a line that seemed wrong?
+
+04:06 I2: I tried to understand the whole function first, but I didn’t simulate every line for every possible input. I used a small example to see how the data moved through the code. If I found a suspicious condition, I focused on that section.
+
+04:25 Interviewer: Were there moments when you fixed a bug without being completely certain why your change worked?
+
+04:33 I2: Yes, that can happen when the change looks right but I haven’t tested enough cases. In that situation, I’d be less confident about merging it. I’d want to try at least one case that failed before and one normal case. In the game, I sometimes had to make a decision with less validation than I would want in a real project.
+
+04:59 Interviewer: Which kinds of bugs were hardest for you to identify: syntax, semantic, algorithmic, or hallucinated code?
+
+05:08 I2: Algorithmic bugs were probably the hardest. A syntax error is often easy to spot, and a semantic issue may stand out when a variable or condition is clearly inconsistent. An algorithmic bug can be hidden in logic that looks perfectly reasonable. The function may work for the example you first imagine but fail on a boundary case.
+
+05:32 Interviewer: Was there a particular reason you found those algorithmic bugs difficult?
+
+05:39 I2: Mainly because you need to understand what the code is intended to do, not just whether each line looks valid. You also need to think of an input that exposes the problem. If you don’t consider the right edge case, the bug can remain hidden.
+
+05:57 Interviewer: Now for the attack phase: how did you decide what bug to introduce, and what did you need to understand about the code first?
+
+06:08 I2: I first tried to understand the purpose of the function and its expected inputs and outputs. Then I looked for a place where a small change could affect the result, such as changing a comparison, skipping an update, or mishandling an empty input. I wanted the change to be plausible, because an obvious syntax error wouldn’t really test whether the assistant understood the logic.
+
+06:39 Interviewer: So understanding the intended behaviour was important before you could create a useful perturbation?
+
+06:46 I2: Yes. Otherwise, I might introduce a change that breaks the code immediately, but that doesn’t tell me much about whether the assistant can reason about the program.
+
+06:57 Interviewer: Did attacking feel different from defending? If so, how?
+
+07:04 I2: Yes, a little. Defending felt like investigating a problem with incomplete information. Attacking felt more like predicting how a change would affect the program. I had to consider what the assistant might notice and whether the altered code would still look convincing.
+
+07:25 Interviewer: Did you ever skip an attack turn? What made you decide to skip it?
+
+07:32 I2: I would skip when I wasn’t confident I understood the function well enough to make a meaningful change. I’d rather skip than introduce a random mistake that doesn’t test anything. If I had a clear idea of the data flow and a likely weak point, I was more willing to attempt the turn.
+
+07:55 Interviewer: Let’s move to usefulness. How useful do you think this tool would be in a team’s code-review or development process?
+
+08:04 I2: I think it could be useful for training developers to inspect AI-generated code instead of accepting it automatically. It makes people practise reading logic and considering failure cases. For a normal production workflow, though, I wouldn’t use it as a replacement for code review or automated testing. I’d see it as an additional exercise or a way to build awareness.
+
+08:31 Interviewer: What might make it frustrating for developers if a team adopted it?
+
+08:38 I2: If every turn takes too long or the tasks feel repetitive, people may treat it as another mandatory activity rather than a learning tool. The difficulty also needs to be balanced. If the bug is too obvious, it’s not useful; if the code is too complicated, the user may spend time guessing rather than reasoning.
+
+09:00 Interviewer: How would you rate the overall experience out of five?
+
+09:06 I2: As a learning concept, I’d give it around four out of five. The idea of both detecting and introducing bugs is interesting. I’d hold back a point because I’d like stronger validation, more variety in the tasks, and clearer feedback after each attempt.
+
+09:24 Interviewer: What got in your way while using it? Was it the interface, setup, or the workflow?
+
+09:32 I2: The overall flow was understandable, but I wanted more feedback about why an answer was considered correct or incorrect. If I made a mistake, a short explanation or an option to inspect a test case would help me learn from it. Without that, I might know that I got the turn wrong without knowing what reasoning I missed.
+
+09:58 Interviewer: If your team adopted the tool tomorrow, what would you change first?
+
+10:06 I2: I’d add a way to run a few user-defined test cases, or at least show carefully selected examples after a turn. I’d also include a brief explanation of the intended behaviour and the type of bug involved once the attempt is complete. That would make it more useful for learning, not just for getting a score.
+
+10:31 Interviewer: Would you want those test cases to appear before or after you submit your answer?
+
+10:37 I2: I’d prefer to try the task first without seeing the answer. After submitting, I’d like to see the relevant tests and an explanation. That way, the challenge stays intact, but I can still understand what happened afterwards.
+
+10:54 Interviewer: What did you think about the badges, score, or leaderboard? Did they affect your behaviour?
+
+11:02 I2: They can make the activity feel more game-like, especially if people enjoy comparing progress. For me, the explanation of the bug matters more than the leaderboard. I might try again to improve my score, but I’d be more motivated if I could see that I was getting better at identifying different types of mistakes.
+
+11:26 Interviewer: Would you play it again, and what would encourage you to return?
+
+11:33 I2: I would try it again if there were new challenges and a clear sense of progression. For example, starting with simple conditional bugs and gradually moving to more subtle algorithmic ones could be motivating. It would also help if the tool tracked the kinds of bugs I tend to miss so I could practise those areas.
+
+11:58 Interviewer: Is there anything else you would want us to consider before using this in a real setting?
+
+12:06 I2: I’d make sure the tasks resemble realistic code rather than isolated puzzles all the time. The tool should also avoid making speed the only thing that matters. In actual development, careful reasoning and testing are important, even if they take longer.
+
+12:28 Interviewer: That’s useful feedback. Is there any part of the tool you particularly liked?
+
+12:35 I2: I liked that it asks users to think from both sides: how to detect a mistake and how to create one. That makes you pay attention to the structure of the code. It’s more engaging than just reading a list of bugs or answering multiple-choice questions.
+
+12:54 Interviewer: Any final suggestions or questions for me?
+
+13:01 I2: One suggestion is to let users revisit a completed task and compare their original reasoning with the explanation. It could help them notice patterns in their own mistakes. I’d also make sure the feedback is concise, so it helps without interrupting the flow too much.
+
+13:24 Interviewer: Great, thank you. Your feedback is helpful for understanding how the experience could improve. Is there anything else you’d like to add?
+
+13:33 I2: No, I think those are the main points. The core idea is interesting, and I think the learning value would improve with better explanations and test-case support.
+
+13:45 Interviewer: Thanks for your time, I2, and for sharing your thoughts.
+
+13:51 I2: Thank you.
