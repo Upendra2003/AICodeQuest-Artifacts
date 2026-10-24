@@ -1,0 +1,36 @@
+# CITATION.cff -- see https://citation-file-format.github.io/
+#
+# PLACEHOLDER VALUES: author names, the repository URL, and version/DOI
+# are NOT filled in with real data (no git repo/remote/DOI exists yet as
+# of this phase -- see CLAUDE.md's "Current state"). Fill in real values
+# before archiving/submitting -- this file exists now so the FORMAT is
+# right and reviewers see the artifact took citation metadata seriously,
+# not so the placeholder content gets cited as-is.
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "AICodeQuest-Industry: A Comprehension Gate for AI-Generated Code"
+type: software
+authors:
+  - family-names: "TODO-family-name"
+    given-names: "TODO-given-name"
+    affiliation: "TODO-affiliation"
+repository-code: "TODO-repository-url"
+license: MIT
+version: "0.13.0"
+date-released: "2026-08-01"
+keywords:
+  - "AI-assisted programming"
+  - "code comprehension"
+  - "software engineering education"
+  - "developer tools"
+  - "Chrome extension"
+preferred-citation:
+  type: conference-paper
+  title: "TODO-paper-title"
+  authors:
+    - family-names: "TODO-family-name"
+      given-names: "TODO-given-name"
+      affiliation: "TODO-affiliation"
+  conference:
+    name: "ICSE 2027 SEET Track"
+  year: 2027

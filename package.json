@@ -1,0 +1,29 @@
+{
+  "name": "aicodequest-extension",
+  "version": "3.1.1",
+  "private": true,
+  "description": "AICodeQuest-Industry Chrome extension (MV3, comprehension gate for AI-generated code).",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test:unit": "vitest run",
+    "test:e2e": "xvfb-run --auto-servernum playwright test",
+    "shots": "node scripts/preview_shots.mjs",
+    "test": "npm run test:unit && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.56.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-icons": "^5.7.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@vitejs/plugin-react": "^6.0.5",
+    "js-yaml": "^5.2.2",
+    "jsdom": "^30.0.1",
+    "sinon-chrome": "^3.0.1",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
+  }
+}

@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AICodeQuest</title>
+    <script type="module" crossorigin src="/assets/popup-D1Y1SXIp.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/popup-AR11tYWq.css">
+  </head>
+  <body>
+    <!-- Styling lives in popup.css + the panel's shared design tokens
+         (src/game/ui.css), both imported by popup.js so the popup and the
+         in-page panel cannot drift into two different palettes. -->
+    <div class="pop-head">
+      <!-- The logo emblem, sharing .aq-brand__logo with the panel's top bar
+           (src/game/ui.css) so the two headers cannot drift apart. Not a
+           `data-icon` span: those are inline SVGs from a fixed vocabulary
+           (src/popup/icons.js) and a raster brand mark is not one of them.
+           alt is empty because the wordmark beside it already reads
+           "AI CodeQuest". -->
+      <img class="aq-brand__logo" src="icons/icon-48.png" alt="" />
+      <span style="font-weight: 700; font-size: 15px"><span style="font-weight: 500">AI </span>CodeQuest</span>
+      <span class="pop-status">
+        <span id="reachable-indicator"></span>
+        <span id="reachable-label">checking backend…</span>
+      </span>
+    </div>
+
+    <!-- Phase 25: sign in OR create an account. `#login-form`, `#email`,
+         `#password` and `#logged-in-panel` keep their ids and roles -- the
+         Playwright helper (tests/e2e/helpers.js loginViaPopup) addresses
+         them directly. -->
+    <div id="auth-card" class="pop-card">
+      <div class="pop-tabs" role="tablist">
+        <button id="tab-login" class="pop-tab" type="button" role="tab" aria-selected="true">Sign in</button>
+        <button id="tab-register" class="pop-tab" type="button" role="tab" aria-selected="false">Create account</button>
+      </div>
+
+      <form id="login-form">
+        <input id="email" type="email" placeholder="email" autocomplete="username" required />
+        <input id="password" type="password" placeholder="password" autocomplete="current-password" required />
+        <button type="submit" class="aq-btn aq-btn--brand">Log in</button>
+        <div id="login-error"></div>
+      </form>
+
+      <form id="register-form">
+        <input id="reg-name" type="text" placeholder="display name" autocomplete="name" required />
+        <input id="reg-email" type="email" placeholder="email" autocomplete="username" required />
+        <input id="reg-password" type="password" placeholder="password" autocomplete="new-password" required />
+        <label class="pop-field">
+          <span>I am taking part as a</span>
+          <select id="reg-role">
+            <option value="developer">Developer</option>
+            <option value="lead">Tech lead</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+        <button type="submit" class="aq-btn aq-btn--brand">Create account</button>
+        <div id="register-error"></div>
+      </form>
+    </div>
+
+    <div id="logged-in-panel" class="pop-card">
+      <span class="pop-avatar" data-icon="user"></span>
+      <div>
+        <strong id="logged-in-user"></strong>
+        <div id="logged-in-role" class="aq-pill" style="margin-top: 4px; display: none"></div>
+      </div>
+      <!-- 2026-10-18: there was no way to sign out at all. Tokens never
+           expire, so on a shared lab machine the next person inherited the
+           previous participant's account. -->
+      <button id="logout-button" type="button" class="aq-btn aq-btn--ghost aq-btn--sm">
+        <span data-icon="logout"></span> Sign out
+      </button>
+    </div>
+
+    <!-- THE PROFILE CARD WAS REMOVED (Phase 37).
+         It duplicated, in a 340px column, what the game panel's Home and
+         Badges screens already show properly: rank, streak, every play
+         metric, and the achievements strip. Two surfaces rendering the
+         same numbers is two places to keep correct, and the popup was
+         already the one that fell behind -- it kept Phase 11's clears-only
+         framing for years after Phase 29 added the play metrics.
+         What remains here is what the popup is uniquely FOR: who you are
+         signed in as, consent, and the two exports. -->
+
+    <div id="consent-card" class="pop-card">
+      <div class="pop-consent">
+        <span class="pop-sicon" data-icon="lock" style="color: var(--aq-brand); font-size: 15px"></span>
+        <div>
+          <div style="font-weight: 700; font-size: 13px">Study consent</div>
+          <span id="consent-status">unknown</span>
+        </div>
+        <button id="report-button" type="button" class="aq-btn aq-btn--brand aq-btn--sm">
+          <span data-icon="file"></span> Report
+        </button>
+        <button id="export-button" type="button" class="aq-btn aq-btn--secondary aq-btn--sm">
+          <span data-icon="download"></span> JSON
+        </button>
+      </div>
+      <p id="consent-blurb">
+        We record how you answer the challenges. Taking part is voluntary and you can
+        withdraw at any time.
+      </p>
+      <button id="consent-button" type="button" class="aq-btn aq-btn--primary aq-btn--sm">
+        <span data-icon="check"></span> I agree — give consent
+      </button>
+      <div id="consent-error"></div>
+      <div id="export-error"></div>
+    </div>
+
+    <p class="pop-foot">Part of the AICodeQuest study · v3.1.1</p>
+
+  </body>
+</html>

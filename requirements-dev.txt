@@ -1,0 +1,14 @@
+-r requirements.txt
+pytest==8.3.3
+mongomock==4.3.0
+flake8==7.1.1
+
+# Phase 10: mocks the `requests` library at the HTTP layer for testing
+# github_api.py against GitHub's documented (but here never live-verified
+# -- no real GitHub App exists in this sandbox) REST responses.
+responses==0.26.2
+
+# Phase 11: property-based testing for the leaderboard serializer-leak
+# test (random aggregate documents, asserting no private field ever
+# reaches a public payload).
+hypothesis==6.164.0

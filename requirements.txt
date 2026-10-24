@@ -1,0 +1,27 @@
+PyYAML==6.0.2
+jsonschema==4.23.0
+pymongo==4.9.2
+Flask==3.1.0
+flask-jwt-extended==4.7.1
+argon2-cffi==23.1.0
+pydantic[email]==2.9.2
+unidiff==1.0.0
+tree-sitter==0.26.0
+tree-sitter-language-pack==1.13.7
+requests==2.34.2
+rq==2.10.0
+redis==8.1.0
+
+# Phase 10: GitHub App auth. [crypto] pulls in `cryptography` for RS256
+# App-JWT signing -- flask-jwt-extended already depends on PyJWT
+# transitively (HS256 only), so this is pinned explicitly here rather
+# than left as an unpinned transitive dependency.
+PyJWT[crypto]==2.13.0
+
+# Phase 28: the participant-facing progress report (services/report_docx.py).
+# python-docx builds the .docx; matplotlib renders the charts to PNG for
+# embedding. matplotlib is used ONLY with the headless Agg backend -- the
+# study server has no display, and importing pyplot without forcing Agg
+# first is the classic way to hang a request on a missing $DISPLAY.
+python-docx==1.1.2
+matplotlib==3.9.2

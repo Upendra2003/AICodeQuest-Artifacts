@@ -1,0 +1,1227 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "aicodequest-params",
+  "title": "AICodeQuest-Industry Parameters",
+  "description": "Validation schema for config/params.yaml. Every key added to params.yaml must have a matching entry here. The app refuses to boot if params.yaml fails this schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trigger",
+    "developer_gate",
+    "lead_gate",
+    "execution",
+    "llm",
+    "perturbation",
+    "grading",
+    "testgen",
+    "quizgen",
+    "auth",
+    "prefetch",
+    "workers",
+    "latency_budget",
+    "extension",
+    "github_app",
+    "enforcement",
+    "leaderboard",
+    "badges",
+    "data",
+    "consent",
+    "study",
+    "observability",
+    "languages",
+    "bug_bank",
+    "mcq",
+    "lead_review",
+    "gamification"
+  ],
+  "properties": {
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "jwt_access_token_expires_min",
+        "argon2_time_cost",
+        "argon2_memory_cost_kib",
+        "argon2_parallelism"
+      ],
+      "properties": {
+        "jwt_access_token_expires_min": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minutes an access token is valid. 0 means NEVER EXPIRES (mapped to JWT_ACCESS_TOKEN_EXPIRES=False). Was exclusiveMinimum until 2026-09-01, when 0 became the study default."
+        },
+        "argon2_time_cost": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "argon2_memory_cost_kib": {
+          "type": "integer",
+          "minimum": 8
+        },
+        "argon2_parallelism": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "min_lines_changed",
+        "min_modules_changed",
+        "similarity_skip_threshold",
+        "module_grouping_depth",
+        "ignore_globs",
+        "generated_file_markers",
+        "generated_marker_scan_lines"
+      ],
+      "properties": {
+        "min_lines_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "min_modules_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "similarity_skip_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "module_grouping_depth": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "ignore_globs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "generated_file_markers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "generated_marker_scan_lines": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "developer_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pass_threshold_pct",
+        "levels",
+        "round1",
+        "max_quiz_tiers",
+        "max_replays",
+        "manual_restart_enabled",
+        "min_function_logic_nodes"
+      ],
+      "properties": {
+        "pass_threshold_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "A1",
+              "A2",
+              "A3",
+              "A4"
+            ]
+          }
+        },
+        "round1": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "attack_questions_per_level",
+            "questions_per_level"
+          ],
+          "properties": {
+            "questions_per_level": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "attack_questions_per_level": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "max_quiz_tiers": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_replays": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manual_restart_enabled": {
+          "type": "boolean"
+        },
+        "min_function_logic_nodes": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum branch/loop/call/operator node count for a function to be usable as a turn target (extraction.can_host_a_bug). 0 disables the filter."
+        }
+      }
+    },
+    "lead_gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pass_threshold_pct",
+        "questions_per_nfr",
+        "options_per_question",
+        "nfr_weighting",
+        "default_nfrs",
+        "max_question_regen_attempts",
+        "max_retries",
+        "self_consistency_k",
+        "self_consistency_temperature",
+        "max_option_length_ratio"
+      ],
+      "properties": {
+        "pass_threshold_pct": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "questions_per_nfr": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "options_per_question": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 8
+        },
+        "nfr_weighting": {
+          "type": "string",
+          "enum": [
+            "equal"
+          ]
+        },
+        "default_nfrs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "security",
+              "maintainability",
+              "usability",
+              "performance",
+              "reliability"
+            ]
+          }
+        },
+        "max_question_regen_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "self_consistency_k": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "self_consistency_temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_option_length_ratio": {
+          "type": "number",
+          "minimum": 1
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "backend",
+        "piston_url",
+        "piston_output_max_bytes",
+        "judge0_url",
+        "cpu_time_limit_sec",
+        "memory_limit_kb",
+        "wall_clock_timeout_sec",
+        "enable_network",
+        "max_processes_and_threads",
+        "poll_interval_sec",
+        "poll_timeout_buffer_sec",
+        "max_infra_error_retries",
+        "infra_error_retry_backoff_sec",
+        "language_name_patterns",
+        "piston_languages"
+      ],
+      "properties": {
+        "backend": {
+          "type": "string",
+          "enum": [
+            "piston",
+            "judge0"
+          ]
+        },
+        "piston_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "piston_output_max_bytes": {
+          "type": "integer",
+          "minimum": 1024
+        },
+        "judge0_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "cpu_time_limit_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "memory_limit_kb": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "wall_clock_timeout_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "enable_network": {
+          "type": "boolean"
+        },
+        "max_processes_and_threads": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "poll_interval_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "poll_timeout_buffer_sec": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max_infra_error_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "infra_error_retry_backoff_sec": {
+          "type": "number",
+          "minimum": 0
+        },
+        "language_name_patterns": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "python",
+            "javascript",
+            "java",
+            "c"
+          ],
+          "properties": {
+            "python": {
+              "type": "string",
+              "minLength": 1
+            },
+            "javascript": {
+              "type": "string",
+              "minLength": 1
+            },
+            "java": {
+              "type": "string",
+              "minLength": 1
+            },
+            "c": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "piston_languages": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "install",
+              "name",
+              "version"
+            ],
+            "properties": {
+              "install": {
+                "type": "string",
+                "minLength": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "version": {
+                "type": "string",
+                "pattern": "^\\d+\\.\\d+\\.\\d+$"
+              }
+            }
+          }
+        }
+      }
+    },
+    "llm": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "ollama_base_url",
+        "model",
+        "temperature",
+        "max_tokens",
+        "timeout_sec",
+        "opponent_model",
+        "json_validation_max_retries",
+        "keep_alive",
+        "code_response_max_retries",
+        "escalation_model"
+      ],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ollama_base_url": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://"
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_tokens": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "timeout_sec": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "opponent_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "json_validation_max_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "keep_alive": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code_response_max_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "escalation_model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "timeouts_by_model": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "description": "Per-model overrides for llm.timeout_sec, keyed by model id."
+        },
+        "disable_thinking_for": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Models for which Ollama's think:false is sent; reasoning tokens otherwise consume max_tokens and can leave content empty."
+        }
+      }
+    },
+    "perturbation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_regen_attempts",
+        "accept_unverified_when_execution_unavailable",
+        "max_bug_verification_attempts",
+        "enforce_level_shape",
+        "enforce_level_classifier"
+      ],
+      "properties": {
+        "max_regen_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "accept_unverified_when_execution_unavailable": {
+          "type": "boolean"
+        },
+        "max_bug_verification_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "enforce_level_classifier": {
+          "type": "boolean"
+        },
+        "enforce_level_shape": {
+          "type": "boolean"
+        }
+      }
+    },
+    "grading": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "llm_judge_enabled",
+        "llm_judge_temperature"
+      ],
+      "properties": {
+        "llm_judge_enabled": {
+          "type": "boolean"
+        },
+        "llm_judge_temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    },
+    "testgen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_generated_cases",
+        "min_surviving_cases",
+        "mutation_kill_set_size",
+        "cases_per_suite",
+        "max_suite_attempts",
+        "escalate_after_attempts",
+        "require_distinct_goldens",
+        "file_context_enabled",
+        "file_context_max_chars",
+        "suite_infeasible_after",
+        "suite_eligibility_precheck"
+      ],
+      "properties": {
+        "max_generated_cases": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "min_surviving_cases": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "mutation_kill_set_size": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "cases_per_suite": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_suite_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "escalate_after_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "require_distinct_goldens": {
+          "type": "boolean"
+        },
+        "file_context_enabled": {
+          "type": "boolean"
+        },
+        "file_context_max_chars": {
+          "type": "integer",
+          "minimum": 1000
+        },
+        "suite_infeasible_after": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "suite_eligibility_precheck": {
+          "type": "boolean"
+        },
+        "model": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Model used for test-suite generation; null = llm.model."
+        }
+      }
+    },
+    "quizgen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "self_consistency_k",
+        "self_consistency_temperature"
+      ],
+      "properties": {
+        "self_consistency_k": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "self_consistency_temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        }
+      }
+    },
+    "prefetch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lookahead_count",
+        "fallback_to_static_bank",
+        "max_wait_ms",
+        "inline_wait_ms",
+        "max_fallback_upgrade_attempts",
+        "opponent_warmup_enabled",
+        "prefer_real_turn_over_substitute",
+        "max_functions_tried_per_turn"
+      ],
+      "properties": {
+        "lookahead_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fallback_to_static_bank": {
+          "type": "boolean"
+        },
+        "max_wait_ms": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "inline_wait_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "max_fallback_upgrade_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "opponent_warmup_enabled": {
+          "type": "boolean"
+        },
+        "prefer_real_turn_over_substitute": {
+          "type": "boolean"
+        },
+        "max_functions_tried_per_turn": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "workers": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_retries",
+        "retry_backoff_sec",
+        "result_ttl_sec",
+        "job_timeout_sec"
+      ],
+      "properties": {
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "retry_backoff_sec": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "result_ttl_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "job_timeout_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "latency_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "task_render_p95_ms",
+        "defense_verdict_p95_ms",
+        "attack_opponent_p95_ms",
+        "nfr_question_p95_ms"
+      ],
+      "properties": {
+        "task_render_p95_ms": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "defense_verdict_p95_ms": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "attack_opponent_p95_ms": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "nfr_question_p95_ms": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "extension": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "backend_base_url"
+      ],
+      "properties": {
+        "backend_base_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "github_app": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "app_jwt_expiry_sec",
+        "installation_token_refresh_buffer_sec",
+        "api_base_url",
+        "check_name_developer",
+        "check_name_lead",
+        "details_url_template"
+      ],
+      "properties": {
+        "app_jwt_expiry_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 600
+        },
+        "installation_token_refresh_buffer_sec": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "api_base_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "check_name_developer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "check_name_lead": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details_url_template": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "enforcement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "shadow",
+            "advisory",
+            "enforced"
+          ]
+        }
+      }
+    },
+    "leaderboard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tiers",
+        "max_completions_per_window",
+        "rate_limit_window_hours",
+        "reconciliation_drift_tolerance",
+        "score_weights",
+        "score_absent_phase",
+        "score_confidence_turns"
+      ],
+      "properties": {
+        "tiers": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "min_gates_cleared"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "min_gates_cleared": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "max_completions_per_window": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "rate_limit_window_hours": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "reconciliation_drift_tolerance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "score_weights": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "defense",
+            "attack"
+          ],
+          "description": "How the developer leaderboard's ranked score is composed. A weighted mean of the two phase RATES, not a pooled turn count. NOT the gate score -- the merge button is released on developer_gate.pass_threshold_pct against bug detection accuracy alone, so this can cost rank but never access. Weights need not sum to 1 (they are normalised over the contributing phases) but must sum to more than 0, a cross-field property enforced by backend/app/services/scoring.py.",
+          "properties": {
+            "defense": {
+              "type": "number",
+              "minimum": 0
+            },
+            "attack": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        },
+        "score_confidence_turns": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "K pretend-missed turns added to each phase's denominator before blending: rate = won / (graded + K). Makes the leaderboard reflect how much a participant has played as well as how well; 0 is the plain rate. Ranking only -- the gate never reads it."
+        },
+        "score_absent_phase": {
+          "type": "string",
+          "enum": [
+            "zero",
+            "renormalize"
+          ],
+          "description": "What happens to a phase with no graded turns. 'zero' gives it 0 at its full weight, so playing Attack is always at least as good as skipping -- the only value that produces the incentive the blend exists for. 'renormalize' weights only the phases with graded turns, which INVERTS the incentive: skipping outscores playing attack well. See the worked numbers in config/params.yaml."
+        }
+      }
+    },
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "tier",
+          "metric",
+          "op",
+          "value",
+          "persona"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "tier": {
+            "type": "string",
+            "minLength": 1
+          },
+          "persona": {
+            "type": "string",
+            "enum": [
+              "developer",
+              "lead",
+              "any"
+            ]
+          },
+          "metric": {
+            "type": "string",
+            "minLength": 1
+          },
+          "op": {
+            "type": "string",
+            "enum": [
+              ">=",
+              ">",
+              "<=",
+              "<",
+              "==",
+              "!="
+            ]
+          },
+          "value": {
+            "type": [
+              "number",
+              "boolean"
+            ]
+          }
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "retain_source_snippets",
+        "redaction"
+      ],
+      "properties": {
+        "retain_source_snippets": {
+          "type": "boolean"
+        },
+        "redaction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "ticket_id_pattern"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "ticket_id_pattern": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    },
+    "consent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "current_version",
+        "withdrawal_categories",
+        "org_consent_mode"
+      ],
+      "properties": {
+        "current_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "withdrawal_categories": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "org_consent_mode": {
+          "type": "string",
+          "enum": [
+            "required",
+            "advisory"
+          ]
+        }
+      }
+    },
+    "study": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "practice_mode_enabled"
+      ],
+      "properties": {
+        "practice_mode_enabled": {
+          "type": "boolean"
+        }
+      }
+    },
+    "observability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "queue_depth_alert_threshold",
+        "p95_check_window_minutes",
+        "suite_coverage_alert_pct",
+        "suite_coverage_min_sample"
+      ],
+      "properties": {
+        "queue_depth_alert_threshold": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "p95_check_window_minutes": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "suite_coverage_alert_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "suite_coverage_min_sample": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verbose_logging": {
+          "type": "boolean",
+          "description": "Turn this project's loggers up to DEBUG (full LLM payloads, function entry/exit, timings)."
+        },
+        "color_logs": {
+          "type": "boolean",
+          "description": "Colour backend logs by subsystem; auto-disabled when stderr is not a TTY."
+        },
+        "log_payload_chars": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Chars of an LLM prompt/response shown at DEBUG; 0 = no truncation."
+        }
+      }
+    },
+    "languages": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extensions",
+          "grading",
+          "grammar"
+        ],
+        "properties": {
+          "extensions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^\\."
+            }
+          },
+          "grading": {
+            "type": "string",
+            "enum": [
+              "tests",
+              "compare"
+            ]
+          },
+          "grammar": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "bug_bank": {
+      "type": "object",
+      "description": "A1-A4 mutation-operator catalogue; one entry per operator.",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "name",
+            "instruction",
+            "before",
+            "after"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[a-z0-9_]+$"
+            },
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "instruction": {
+              "type": "string",
+              "minLength": 1
+            },
+            "before": {
+              "type": "string"
+            },
+            "after": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "mcq": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "options_per_question",
+        "max_attempts",
+        "max_option_length_ratio",
+        "questions_per_gate"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "options_per_question": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max_option_length_ratio": {
+          "type": "number",
+          "exclusiveMinimum": 1
+        },
+        "questions_per_gate": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "llm_self_answer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "enabled",
+            "passes",
+            "temperature"
+          ],
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "passes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "temperature": {
+              "type": "number",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "lead_review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "items_per_pr",
+        "sample_fraction",
+        "reviewers_per_item"
+      ],
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "items_per_pr": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sample_fraction": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1
+        },
+        "reviewers_per_item": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "gamification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "milestone_every",
+        "celebrate_first_bug",
+        "toast_ms",
+        "confetti_enabled",
+        "celebrate_every_win",
+        "confetti_on_round_complete"
+      ],
+      "properties": {
+        "milestone_every": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Celebrate every Nth bug caught. 0 disables count milestones, leaving only the badge ladder."
+        },
+        "celebrate_first_bug": {
+          "type": "boolean"
+        },
+        "toast_ms": {
+          "type": "integer",
+          "minimum": 250,
+          "maximum": 15000
+        },
+        "confetti_enabled": {
+          "type": "boolean"
+        },
+        "celebrate_every_win": {
+          "type": "boolean"
+        },
+        "confetti_on_round_complete": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

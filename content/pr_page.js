@@ -1,0 +1,154 @@
+var AICodeQuestContentScript=(function(e){Object.defineProperty(e,Symbol.toStringTag,{value:`Module`});var t={createPrButton:/^(create|draft a?)\s*pull request$/i,existingPrLink:/^view pull request$/i,mergeButton:/^(merge pull request|squash and merge|rebase and merge|confirm merge|confirm squash and merge|confirm rebase and merge)$/i},n=`button, [role="button"], input[type="submit"], summary, a[href*="/pull/"]`;function r(e){let t=e.getAttribute?.(`aria-label`);return t&&t.trim()?t.trim():e.tagName===`INPUT`?(e.value||``).trim():(e.textContent||``).replace(/\s+/g,` `).trim()}function i(e){let t=e.body?.getBoundingClientRect?.();return!!(t&&(t.width>0||t.height>0))}function a(e){let t=e.getBoundingClientRect?.();return!!(t&&t.width>0&&t.height>0)}var o={prTitle:[`bdi.js-issue-title`,`[data-testid="issue-title"]`,`h1.gh-header-title`,`h1`],createPrButton:[`.js-details-target.btn-primary.btn`,`[data-testid="create-pull-request-button"]`,`form#new_pull_request button.btn-primary[type="submit"]`,`button.btn-primary[type="submit"]`],existingPrLink:[`a[href*="/pull/"][class*="Button"]`,`.gh-header-actions a[href*='/pull/']`,`a[data-testid="view-pull-request"]`],mergeButton:[`[data-testid="mergebox-partial"] button`,`[data-testid="merge-button"]`,`button.merge-message`,`button[data-details-container=".merge-pr"]`],filesChangedContainer:[`#files`,`[data-testid="diff-layout"]`,`.diff-view`,`.js-diff-progressive-container`]},s=null;function c(e){s=e}function l(e,t=12){let i=[];for(let a of e.querySelectorAll(n)){let e=r(a).slice(0,40);if(e&&!i.includes(e)&&i.push(e),i.length>=t)break}return i}function u(e,n){let r=o[e]||[],i=l(n);if(console.warn(`[AICodeQuest] selector miss: "${e}" matched none of ${JSON.stringify(r)}, and nothing was labelled like ${t[e]} either. Controls present: ${JSON.stringify(i)}. GitHub may have shipped a DOM change. Reporting to the backend.`),s)try{s(e,{page_url:n.location?n.location.href:``,candidates_tried:r,text_pattern_tried:String(t[e]||``),controls_present:i})}catch(e){console.warn(`[AICodeQuest] selector-miss reporter itself threw:`,e)}}function d(e,t){let n=[];for(let r of o[t]||[]){let t;try{t=e.querySelectorAll(r)}catch{continue}for(let e of t)n.includes(e)||n.push(e)}return n}function f(e,i){let a=t[i];if(!a)return[];let o=[];for(let t of e.querySelectorAll(n))a.test(r(t))&&o.push(t);return o}function p(e,t){let n=m(e,t);if(n)return{element:n,mode:`block`};if(t===`createPrButton`){let t=m(e,`existingPrLink`);if(t)return{element:t,mode:`anchor-only`}}return u(t,e),{element:null,mode:`none`}}function m(e,t){if(!o[t])throw Error(`unknown selector key: ${JSON.stringify(t)}`);let n=d(e,t),r=f(e,t).filter(e=>!n.includes(e)),s=[...n,...r];if(s.length===0)return null;if(i(e)){let e=s.find(a);if(e)return e}return s[0]}var h=/^\/([^/]+)\/([^/]+)\/pull\/(\d+)/,g=/^\/([^/]+)\/([^/]+)\/compare\/([^.]+)\.\.\.(?:([^:/]+):)?([^?]+)/;function _(e){let t;try{t=new URL(e).pathname}catch{return{context:`none`}}let n=t.match(h);if(n){let[,e,t,r]=n;return{context:`pr_conversation`,owner:e,repo:t,pr_number:Number(r)}}let r=t.match(g);if(r){let[,e,t,n,i,a]=r;return{context:`new_pr`,owner:e,repo:t,base:n,head:i?`${i}:${a}`:a}}return{context:`none`}}function v(e){for(let t of[`user-login`,`octolytics-actor-login`]){let n=e.querySelector(`meta[name="${t}"]`)?.getAttribute(`content`);if(n&&n.trim())return n.trim()}return null}function y(e){for(let t of[`a.author`,`.author`,`[data-testid="pr-author"]`]){let n=(e.querySelector(t)?.textContent||``).trim();if(n)return n}return null}function b(e){let t=y(e),n=v(e);return!t||!n||t.toLowerCase()===n.toLowerCase()?null:{author:t,viewer:n}}var ee=200;function te(e,{doc:t=document,win:n=window}={}){let r=null,i=null;function a(){if(n.location.href===r)return;let t=r===null?null:_(r);r=n.location.href,e(_(r),t)}function o(){i!==null&&n.clearTimeout(i),i=n.setTimeout(a,ee)}let s=new n.MutationObserver(o);return s.observe(t.documentElement,{childList:!0,subtree:!0}),n.addEventListener(`popstate`,o),a(),function(){s.disconnect(),n.removeEventListener(`popstate`,o),i!==null&&n.clearTimeout(i)}}function ne(e,t){return e.length?e.find(e=>t.some(t=>t.file_path===e.file&&!(t.end_line<e.start_line||t.start_line>e.end_line)))||e[0]:null}function re(e){let t=[...String(e||``).matchAll(/^From ([0-9a-f]{40})\b/gm)];return t.length?t[t.length-1][1]:null}var ie=/^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@/;function ae(e){let t=[],n=null,r=null;for(let i of e.split(`
+`)){let e=i.match(/^\+\+\+ b\/(.+)$/);if(e){n={path:e[1],hunks:[]},t.push(n),r=null;continue}if(!n)continue;let a=i.match(ie);if(a){let e=Number(a[3]),t=a[4]===void 0?1:Number(a[4]);r={startLine:e,endLine:e+Math.max(t-1,0),addedLines:[]},n.hunks.push(r);continue}r&&i.startsWith(`+`)&&!i.startsWith(`+++`)&&r.addedLines.push(i.slice(1))}return t.filter(e=>e.hunks.length>0).map(e=>({path:e.path,hunks:e.hunks.map(e=>({startLine:e.startLine,endLine:e.endLine,preview:(e.addedLines.find(e=>e.trim().length>0)||`(no added lines)`).trim().slice(0,80)}))}))}var oe=`aicodequest-tagging-style`,se=`aicodequest-tag-continue`;function ce(e){if(e.getElementById(`aicodequest-tagging-style`))return;let t=e.createElement(`style`);t.id=oe,t.textContent=`
+    .aicodequest-tagging-panel {
+      --aq-surface: #ffffff; --aq-surface-2: #faf9f5; --aq-surface-3: #ecece4;
+      --aq-border: #e0e0d6; --aq-text: #13343b; --aq-muted: #5c7379;
+      --aq-brand: #114f56; --aq-brand-soft: #e6f2f3; --aq-brand-border: #b9d9dd;
+      --aq-success: #0e7d8c; --aq-success-soft: #e2f6f9;
+      position: fixed; bottom: 16px; right: 16px; z-index: 2147483647;
+      width: 500px; max-width: calc(100vw - 32px); max-height: 76vh;
+      display: flex; flex-direction: column; overflow: hidden;
+      border: 1px solid var(--aq-border); border-radius: 14px;
+      background: var(--aq-surface); color: var(--aq-text);
+      box-shadow: 0 18px 48px rgba(19,52,59,.22);
+      font: 13px/1.5 "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    }
+    /* Two dark signals, because they disagree in practice: the OS
+       preference, and GitHub's own theme switch (it sets data-color-mode
+       on <html>, and a participant can run GitHub dark on a light OS).
+       Following only the first left a white card glued to a dark page. */
+    @media (prefers-color-scheme: dark) {
+      .aicodequest-tagging-panel { --aq-surface: #13343b; --aq-surface-2: #173d45; --aq-surface-3: #1d4a53; --aq-border: #235058; --aq-text: #f3f3ee; --aq-muted: #9fbabf; --aq-brand: #1fb8cd; --aq-brand-soft: #0e3a42; --aq-brand-border: #1c5e69; --aq-success: #1fb8cd; --aq-success-soft: #0d3b43; box-shadow: 0 18px 48px rgba(0,0,0,.5); }
+    }
+    :root[data-color-mode="dark"] .aicodequest-tagging-panel { --aq-surface: #13343b; --aq-surface-2: #173d45; --aq-surface-3: #1d4a53; --aq-border: #235058; --aq-text: #f3f3ee; --aq-muted: #9fbabf; --aq-brand: #1fb8cd; --aq-brand-soft: #0e3a42; --aq-brand-border: #1c5e69; --aq-success: #1fb8cd; --aq-success-soft: #0d3b43; box-shadow: 0 18px 48px rgba(0,0,0,.5); }
+    /* data-color-mode="auto" means GitHub itself follows the OS, so this
+       must ALSO be gated on the OS preference. Matching the attribute
+       alone forced a dark card onto a light page -- and "auto" is
+       GitHub's default, so that was the common case, not the edge one.
+       Caught by reading a real page's <html> tag. */
+    @media (prefers-color-scheme: dark) {
+      :root[data-color-mode="auto"] .aicodequest-tagging-panel { --aq-surface: #13343b; --aq-surface-2: #173d45; --aq-surface-3: #1d4a53; --aq-border: #235058; --aq-text: #f3f3ee; --aq-muted: #9fbabf; --aq-brand: #1fb8cd; --aq-brand-soft: #0e3a42; --aq-brand-border: #1c5e69; --aq-success: #1fb8cd; --aq-success-soft: #0d3b43; box-shadow: 0 18px 48px rgba(0,0,0,.5); }
+    }
+    .aicodequest-tagging-panel * { box-sizing: border-box; }
+    .aq-tag-head {
+      display: flex; align-items: center; gap: 8px;
+      padding: 14px 16px; border-bottom: 1px solid var(--aq-border);
+    }
+    .aq-tag-brand { display: inline-flex; align-items: center; gap: 7px; font-weight: 700; font-size: 14px; }
+    .aq-tag-brand svg { width: 16px; height: 16px; color: var(--aq-brand); }
+    .aq-tag-brand span { font-weight: 500; }
+    .aq-tag-count {
+      margin-left: auto; padding: 3px 10px; border-radius: 999px;
+      background: var(--aq-brand-soft); color: var(--aq-brand);
+      font-size: 12px; font-weight: 600; white-space: nowrap;
+    }
+    .aq-tag-count[data-complete="true"] { background: var(--aq-success-soft); color: var(--aq-success); }
+    .aq-tag-lede { padding: 12px 16px 0; margin: 0; }
+    .aq-tag-lede strong { display: block; margin-bottom: 2px; font-size: 13.5px; }
+    .aq-tag-lede span { color: var(--aq-muted); font-size: 12.5px; }
+    .aq-tag-list { flex: 1 1 auto; overflow-y: auto; padding: 12px 16px; }
+    .aq-tag-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+      padding: 10px 12px; margin-bottom: 8px;
+      border: 1px solid var(--aq-border); border-radius: 10px; background: var(--aq-surface-2);
+    }
+    .aq-tag-row:last-child { margin-bottom: 0; }
+    /* Phase 36: one header per file, carrying the per-file bulk actions.
+       The rows beneath it are indented so the grouping reads without a
+       second border. */
+    .aq-tag-filehead {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; flex-wrap: wrap; margin: 12px 0 6px;
+    }
+    .aq-tag-filehead:first-child { margin-top: 0; }
+    .aq-tag-filehead .aq-tag-file { font-size: 12.5px; font-weight: 600; }
+    .aq-tag-fileactions { display: flex; align-items: center; gap: 6px; }
+    .aq-tag-filecount { color: var(--aq-muted); font-size: 11.5px; }
+    .aq-tag-btn--bulk {
+      padding: 3px 10px; font-size: 11.5px; border-radius: 999px;
+      background: var(--aq-surface); color: var(--aq-text);
+      border: 1px solid var(--aq-border); cursor: pointer;
+    }
+    .aq-tag-btn--bulk:hover { border-color: var(--aq-brand); }
+    .aq-tag-where { flex: 1 1 190px; min-width: 0; }
+    .aq-tag-file {
+      display: block; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .aq-tag-preview {
+      display: block; color: var(--aq-muted); font-size: 11.5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .aq-tag-choice { display: flex; gap: 6px; flex: 0 0 auto; }
+    .aq-tag-opt {
+      display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+      padding: 5px 11px; border: 1px solid var(--aq-border); border-radius: 999px;
+      background: var(--aq-surface); color: var(--aq-muted);
+      font-size: 12px; font-weight: 500; white-space: nowrap; user-select: none;
+    }
+    .aq-tag-opt:hover { background: var(--aq-surface-3); color: var(--aq-text); }
+    .aq-tag-opt input { margin: 0; accent-color: var(--aq-brand); }
+    .aq-tag-opt:has(input:checked) {
+      border-color: var(--aq-brand-border); background: var(--aq-brand-soft);
+      color: var(--aq-brand); font-weight: 600;
+    }
+    .aq-tag-opt:has(input:focus-visible) { outline: 2px solid var(--aq-brand); outline-offset: 1px; }
+    .aq-tag-foot {
+      display: flex; flex-direction: row-reverse; align-items: center; gap: 8px;
+      padding: 12px 16px; border-top: 1px solid var(--aq-border); background: var(--aq-surface);
+    }
+    .aq-tag-btn {
+      padding: 8px 16px; border: 1px solid transparent; border-radius: 7px;
+      font: inherit; font-weight: 600; cursor: pointer;
+    }
+    .aq-tag-btn--primary { background: var(--aq-success); color: #fff; }
+    .aq-tag-btn--primary:disabled { opacity: .5; cursor: default; }
+    .aq-tag-btn--ghost {
+      background: none; border-color: var(--aq-border); color: var(--aq-muted); font-weight: 500;
+      padding: 7px 12px; font-size: 12px;
+    }
+    .aq-tag-btn--ghost:hover { background: var(--aq-surface-3); color: var(--aq-text); }
+    .aq-tag-spacer { margin-right: auto; }
+  `,e.head.appendChild(t)}var le=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`;function ue(e,t){return new Promise(n=>{let r=e.ownerDocument,i=[];for(let e of t)for(let t of e.hunks)i.push({path:e.path,...t,tag:null});ce(r);let a=r.createElement(`div`);a.className=`aicodequest-tagging-panel`,a.setAttribute(`role`,`region`),a.setAttribute(`aria-label`,`AICodeQuest: tag AI-generated changes`);let o=r.createElement(`div`);o.className=`aq-tag-head`;let s=r.createElement(`div`);s.className=`aq-tag-brand`,s.innerHTML=`${le}<span>AI </span>CodeQuest`;let c=r.createElement(`div`);c.className=`aq-tag-count`,c.setAttribute(`role`,`status`),c.setAttribute(`aria-live`,`polite`),o.append(s,c);let l=r.createElement(`p`);l.className=`aq-tag-lede`,l.innerHTML=`<strong>Which of these changes did AI write?</strong><span>Your answer is part of the study — it is recorded as you give it, and it decides which code the challenge is built from.</span>`;let u=r.createElement(`div`);u.className=`aq-tag-list`;let d=r.createElement(`div`);d.className=`aq-tag-foot`;let f=r.createElement(`button`);f.id=se,f.type=`button`,f.className=`aq-tag-btn aq-tag-btn--primary`,f.textContent=`Continue`,f.disabled=!0,f.setAttribute(`aria-label`,`Continue past AI-authorship tagging`),d.appendChild(f);function p(){return v.size===0?`per_hunk`:v.size===b.size?`per_file`:`mixed`}let m=()=>i.filter(e=>e.tag!==null).length,h=()=>m()===i.length;function g(){let e=m();c.textContent=`${e} of ${i.length} tagged`,c.dataset.complete=String(e===i.length),f.disabled=!h()}function _(e,t){let n=r.createElement(`div`);n.className=`aq-tag-row`;let i=r.createElement(`div`);i.className=`aq-tag-where`;let a=r.createElement(`code`);a.className=`aq-tag-file`,a.textContent=e.path;let o=r.createElement(`code`);o.className=`aq-tag-preview`,o.textContent=`:${e.startLine}-${e.endLine}  ${e.preview}`,i.append(a,o),n.appendChild(i);let s=r.createElement(`div`);s.className=`aq-tag-choice`;let c=`aicodequest-tag-${t}`;for(let[t,n]of[[`ai`,`AI wrote it`],[`human`,`I wrote it`]]){let i=r.createElement(`label`);i.className=`aq-tag-opt`;let a=r.createElement(`input`);a.type=`radio`,a.name=c,a.value=t,a.addEventListener(`change`,()=>{e.tag=t,g()}),i.appendChild(a),i.appendChild(r.createTextNode(n)),s.appendChild(i)}return n.appendChild(s),n}let v=new Set;function y(e,t){let n=r.createElement(`div`);n.className=`aq-tag-filehead`;let i=r.createElement(`code`);i.className=`aq-tag-file`,i.textContent=e;let a=r.createElement(`div`);a.className=`aq-tag-fileactions`;let o=r.createElement(`span`);if(o.className=`aq-tag-filecount`,o.textContent=t.length===1?`1 change`:`${t.length} changes`,a.appendChild(o),t.length>1)for(let[n,i]of[[`ai`,`All AI`],[`human`,`All mine`]]){let o=r.createElement(`button`);o.type=`button`,o.className=`aq-tag-btn aq-tag-btn--bulk`,o.dataset.bulk=n,o.dataset.file=e,o.textContent=i,o.addEventListener(`click`,()=>{for(let e of t){e.tag=n;let t=u.querySelector(`input[name="aicodequest-tag-${e.index}"][value="${n}"]`);t&&(t.checked=!0)}v.add(e),g()}),a.appendChild(o)}return n.append(i,a),n}i.forEach((e,t)=>{e.index=t});let b=new Map;for(let e of i)b.has(e.path)||b.set(e.path,[]),b.get(e.path).push(e);for(let[e,t]of b){u.appendChild(y(e,t));for(let e of t)u.appendChild(_(e,e.index))}if(f.addEventListener(`click`,()=>{if(!h())return;let e=i.filter(e=>e.tag===`ai`).map(e=>({file_path:e.path,start_line:e.startLine,end_line:e.endLine}));a.remove(),n({ranges:e,tagging_method:p()})}),i.length===0){n({ranges:[],tagging_method:`none`});return}g(),a.append(o,l,u,d),e.appendChild(a)})}var x=`aicodequest-gate-icon`,S=`aicodequest-gate-badge`,C=`aicodequest-gate-notice`,de=`aicodequest-gate-style`,w=`aicodequest-floating-container`,T=`aicodequest-author-mismatch`,fe=`This pull request already exists. Open the comprehension check here, or from the pull request page before merging.`,E=`This is a prompt, not a lock: disabling this button is cosmetic. Real merge protection is enforced separately by GitHub's Checks API.`;function D(e){let t=e.getElementById(w);return t||(t=e.createElement(`div`),t.id=w,t.style.cssText=`position:fixed;bottom:16px;right:16px;z-index:2147483647;display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:320px;`,e.body.appendChild(t)),t}var pe=8e3,O=null;function me(e,t){for(let n of o[t]||[])try{let t=e.querySelector(n);if(t)return t}catch{}return null}function k(){O&&=(O.disconnect(),null)}function A(e,t){if(typeof MutationObserver>`u`)return;k();let n=new MutationObserver(()=>{let n=me(e,t);n&&!n.hasAttribute(`data-aicodequest-disabled`)&&(n.disabled=!0,n.setAttribute(`data-aicodequest-disabled`,`true`),k())});n.observe(e.body,{childList:!0,subtree:!0}),O=n,setTimeout(()=>{O===n&&k()},pe)}function j(e){if(e.getElementById(`aicodequest-gate-style`))return;let t=e.createElement(`style`);t.id=de,t.textContent=`
+    #${x} {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; margin-left: 8px; border-radius: 50%;
+      border: none; background: #a84b2f; color: #fff;
+      cursor: pointer; line-height: 1; padding: 0;
+      box-shadow: 0 0 0 0 rgba(168, 75, 47, 0.55);
+      animation: aicodequest-gate-pulse 2.4s ease-out infinite;
+    }
+    #${x}:hover { background: #8d3d26; }
+    #${x} svg { width: 16px; height: 16px; display: block; }
+    #${x}:focus-visible {
+      outline: 3px solid #1fb8cd; outline-offset: 2px;
+    }
+    @keyframes aicodequest-gate-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(168, 75, 47, 0.5); }
+      70% { box-shadow: 0 0 0 9px rgba(168, 75, 47, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(168, 75, 47, 0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #${x} { animation: none; }
+    }
+    #${S} {
+      display: inline-block; padding: 2px 10px; border-radius: 12px;
+      background: #ecece4; color: #5c7379; font: 12px "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      margin: 6px 0;
+    }
+    #${S}[data-kind="error"] {
+      display: block; max-width: 320px; border-radius: 8px;
+      background: #fbf1dd; color: #8a6320; border: 1px solid #e6cf9f;
+      padding: 8px 10px; line-height: 1.45;
+    }
+    #${T} {
+      font: 12px "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      color: #8a6320; background: #fbf1dd; border: 1px solid #e6cf9f;
+      border-radius: 6px; padding: 6px 10px; margin: 4px 0; max-width: 480px;
+    }
+    #${C} {
+      font: 12px "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; color: #5c7379; margin: 4px 0;
+      max-width: 480px;
+    }
+  `,e.head.appendChild(t)}function M(e){k(),e.getElementById(x)?.remove(),e.getElementById(S)?.remove(),e.getElementById(C)?.remove(),e.getElementById(T)?.remove(),e.getElementById(w)?.remove();let t=e.querySelector(`[data-aicodequest-disabled]`);t&&(t.disabled=!1,t.removeAttribute(`data-aicodequest-disabled`),t.removeAttribute(`data-aicodequest-provisional`),t.removeAttribute(`title`))}function he(e,t){let{element:n,mode:r}=p(e,t);return!n||r!==`block`?(A(e,t),!1):(n.hasAttribute(`data-aicodequest-disabled`)||(n.disabled=!0,n.setAttribute(`data-aicodequest-disabled`,`true`),n.setAttribute(`data-aicodequest-provisional`,`true`),n.title=`AICodeQuest is checking whether this change needs a comprehension gate.`),!0)}function ge(e){k();let t=e.querySelector(`[data-aicodequest-provisional]`);t&&(t.disabled=!1,t.removeAttribute(`data-aicodequest-disabled`),t.removeAttribute(`data-aicodequest-provisional`),t.removeAttribute(`title`))}function _e(e,{title:t,detail:n}){M(e),j(e);let r=e.createElement(`div`);r.id=S,r.dataset.kind=`error`;let i=e.createElement(`strong`);i.textContent=t;let a=e.createElement(`span`);a.textContent=` ${n}`,r.append(i,a),D(e).appendChild(r)}function ve(e,t){M(e),j(e);let n=e.createElement(`div`);n.id=S,n.textContent=`comprehension gate: not required — ${t}`,D(e).appendChild(n)}function ye(e,{targetButtonKey:t,reason:n,onIconClick:r}){M(e),j(e);let{element:i,mode:a}=p(e,t);i&&a===`block`&&(i.disabled=!0,i.setAttribute(`data-aicodequest-disabled`,`true`));let o=e.createElement(`button`);o.id=x,o.type=`button`,o.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>`,o.setAttribute(`aria-label`,`AICodeQuest comprehension gate required: ${n}. ${E}`),o.title=`Comprehension gate required: ${n}`,o.addEventListener(`click`,r);let s=e.createElement(`div`);s.id=C,s.textContent=a===`anchor-only`?fe:E;let c=b(e),l=null;if(c&&(l=e.createElement(`div`),l.id=T,l.textContent=`Heads up: this pull request was opened by @${c.author}, but you are signed in to GitHub as @${c.viewer}. Your answers are recorded against YOUR account.`),i&&i.parentNode)i.insertAdjacentElement(`afterend`,o),o.insertAdjacentElement(`afterend`,s),l&&s.insertAdjacentElement(`afterend`,l);else{let n=D(e);n.appendChild(o),n.appendChild(s),l&&n.appendChild(l),A(e,t)}}var N=`aicodequest-panel-overlay`,P=`aicodequest.panelSize`,F={window:`width:1160px;height:760px;max-width:94vw;max-height:92vh;`,full:`width:100vw;height:100vh;max-width:100vw;max-height:100vh;`},be=`border:none;background:transparent;overflow:hidden;box-shadow:0 24px 64px rgba(12,36,41,0.5);`;function I(e,t){let n=F[t]?t:`window`;e.style.cssText=F[n]+be+(n===`full`?`border-radius:0;`:`border-radius:14px;`),e.dataset.size=n}async function xe(){try{if(typeof chrome<`u`&&chrome.storage?.local){let e=(await chrome.storage.local.get(P))[P];if(e===`window`||e===`full`)return e}}catch{}return`window`}function Se(e){try{chrome?.storage?.local?.set?.({[P]:e})}catch{}}function Ce(e,{mode:t,prId:n,diffUrl:r,patchUrl:i,owner:a,repo:o,target:s},c=e=>chrome.runtime.getURL(e)){if(e.getElementById(`aicodequest-panel-overlay`))return;let l=e.createElement(`div`);l.id=N,l.setAttribute(`data-pr-id`,n),l.style.cssText=`position:fixed;inset:0;z-index:2147483647;background:rgba(12,36,41,0.55);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;`;let u=new URL(c(`game.html`));u.searchParams.set(`mode`,t),u.searchParams.set(`prId`,n),r&&u.searchParams.set(`diffUrl`,r),i&&u.searchParams.set(`patchUrl`,i),a&&u.searchParams.set(`owner`,a),o&&u.searchParams.set(`repo`,o),s&&(u.searchParams.set(`targetFile`,s.file),u.searchParams.set(`targetStartLine`,String(s.start_line)),u.searchParams.set(`targetEndLine`,String(s.end_line)));let d=e.createElement(`iframe`);d.id=`aicodequest-panel-frame`,d.src=u.toString(),d.title=`AICodeQuest`,I(d,`window`);function f(e,t=!0){I(d,e),t&&Se(d.dataset.size),d.contentWindow?.postMessage({source:`aicodequest`,type:`PANEL_SIZE`,size:d.dataset.size},`*`)}l.__aicodequestSetSize=f;function p(t){if(t.key===`Escape`&&e.contains(d)){if(d.dataset.size===`full`){f(`window`);return}L(e)}}e.addEventListener(`keydown`,p),l.__aicodequestCleanup=()=>e.removeEventListener(`keydown`,p),l.appendChild(d),e.body.appendChild(l),xe().then(t=>{e.getElementById(`aicodequest-panel-overlay`)&&f(t,!1)})}function we(e){let t=e.getElementById(N),n=e.getElementById(`aicodequest-panel-frame`);!t||!n||t.__aicodequestSetSize?.(n.dataset.size===`full`?`window`:`full`)}function Te(e){let t=e.getElementById(N),n=e.getElementById(`aicodequest-panel-frame`);!t||!n||n.contentWindow?.postMessage({source:`aicodequest`,type:`PANEL_SIZE`,size:n.dataset.size},`*`)}function L(e){let t=e.getElementById(N);t&&(t.__aicodequestCleanup?.(),t.remove())}function Ee(e){return!!e.getElementById(N)}function De(e){return e.getElementById(`aicodequest-panel-overlay`)?.getAttribute(`data-pr-id`)||null}var R=Object.freeze({PING:`PING`,REGISTER:`REGISTER`,LOGIN:`LOGIN`,LOGOUT:`LOGOUT`,GET_ME:`GET_ME`,EVALUATE_GATE:`EVALUATE_GATE`,GET_DIFF:`GET_DIFF`,GET_FILE_SOURCES:`GET_FILE_SOURCES`,REPORT_SELECTOR_MISS:`REPORT_SELECTOR_MISS`,DEV_GATE_START:`DEV_GATE_START`,DEV_GATE_RESTART:`DEV_GATE_RESTART`,DEV_GATE_STATE:`DEV_GATE_STATE`,DEV_GATE_CURRENT_TASK:`DEV_GATE_CURRENT_TASK`,DEV_GATE_PROGRESS:`DEV_GATE_PROGRESS`,DEV_GATE_SUBMIT_DEFENSE:`DEV_GATE_SUBMIT_DEFENSE`,DEV_GATE_SUBMIT_ATTACK:`DEV_GATE_SUBMIT_ATTACK`,DEV_GATE_SKIP_ATTACK:`DEV_GATE_SKIP_ATTACK`,DEV_GATE_ANSWER_MCQ:`DEV_GATE_ANSWER_MCQ`,DEV_GATE_ADVANCE:`DEV_GATE_ADVANCE`,LEAD_GATE_NFRS:`LEAD_GATE_NFRS`,LEAD_GATE_START:`LEAD_GATE_START`,LEAD_GATE_STATE:`LEAD_GATE_STATE`,LEAD_GATE_CURRENT_QUESTION:`LEAD_GATE_CURRENT_QUESTION`,LEAD_GATE_ANSWER:`LEAD_GATE_ANSWER`,LEAD_GATE_PROGRESS:`LEAD_GATE_PROGRESS`,LEAD_GATE_ADVANCE:`LEAD_GATE_ADVANCE`,MCQ_REVIEW_QUEUE:`MCQ_REVIEW_QUEUE`,MCQ_REVIEW_ITEM:`MCQ_REVIEW_ITEM`,MCQ_REVIEW_ANSWER:`MCQ_REVIEW_ANSWER`,CONSENT_GET:`CONSENT_GET`,CONSENT_SIGN:`CONSENT_SIGN`,LEADERBOARD_PUBLIC:`LEADERBOARD_PUBLIC`,LEADERBOARD_ME:`LEADERBOARD_ME`,LEADERBOARD_EXPORT:`LEADERBOARD_EXPORT`,LEADERBOARD_REPORT:`LEADERBOARD_REPORT`});c((e,t)=>{chrome.runtime.sendMessage({type:R.REPORT_SELECTOR_MISS,payload:{selector_key:e,...t}})});function z(e){let t;if(e.context===`pr_conversation`)t=`${e.owner}/${e.repo}#${e.pr_number}`;else if(e.context===`new_pr`)t=e.can_create||!e.existing_pr_number?e.head_sha?`${e.owner}/${e.repo}@${e.base}...${e.head}@${e.head_sha.slice(0,12)}`:`${e.owner}/${e.repo}@${e.base}...${e.head}`:`${e.owner}/${e.repo}#${e.existing_pr_number}`;else return null;return t.replace(/\//g,`__`)}function B(e){let t=m(e,`existingPrLink`)?.getAttribute?.(`href`)?.match(/\/pull\/(\d+)/);return t?Number(t[1]):null}function V(e){let t=U(e);return t?t.replace(/\.diff$/,`.patch`):null}async function H(e,t=Oe){let n=V(e);if(!n)return null;try{let e=await t({type:R.GET_DIFF,diffUrl:n}),r=e?.ok?e.result:null;return r?.ok?re(r.diff):null}catch{return null}}function Oe(e){return chrome.runtime.sendMessage(e)}function U(e){return e.context===`pr_conversation`?`https://github.com/${e.owner}/${e.repo}/pull/${e.pr_number}.diff`:e.context===`new_pr`?`https://github.com/${e.owner}/${e.repo}/compare/${e.base}...${e.head}.diff`:null}function ke(e){return e.context===`new_pr`?`dev`:`lead`}function W(e){return e.context===`new_pr`?`createPrButton`:`mergeButton`}async function Ae(e){let t=await chrome.runtime.sendMessage({type:R.GET_DIFF,diffUrl:e});return!t.ok||!t.result.ok?(console.warn(`[AICodeQuest] could not fetch diff:`,t.error||t.result?.error),null):t.result.diff}var G=`aicodequest.tagged`,K=new Set;async function je(e){try{return(await chrome.storage.session.get(G))?.[G]?.[e]??null}catch{return null}}async function Me(e,t){try{let n=(await chrome.storage.session.get(G))?.[G]??{};n[e]=t,await chrome.storage.session.set({[G]:n})}catch{}}async function q(e,t=document){let n=z(e),r=U(e);if(K.has(n))return;K.add(n);let i=!1;try{return i=await Ne(e,t,n,r),i}finally{K.delete(n),i||ge(t)}}function J(e,t){let n=t?.owner||`this repository's owner`;return String(e||``).includes(`org_consent_missing`)?{title:`AICodeQuest is not enabled for this repository.`,detail:`The study has no organisation consent on record for "${n}". This is separate from the consent you signed when creating your account, and it can only be registered by a researcher — signing again will not change it. Ask the study lead to enable this repo.`}:String(e||``).includes(`participant_consent_missing`)?{title:`You have not signed the study consent yet.`,detail:`Open the AICodeQuest extension icon and sign it, then reload this page.`}:String(e||``).includes(`you have been signed out of AICodeQuest — please sign in again`)?{title:`You have been signed out of AICodeQuest.`,detail:`This is unusual — sign-ins do not time out. Nothing is wrong with your account and your progress is saved. Open the extension icon, sign in again, then reload this page. If it keeps happening, tell the study lead.`}:String(e||``).includes(`not logged in`)?{title:`You are not signed in to AICodeQuest.`,detail:`Open the extension icon to sign in, then reload this page.`}:{title:`AICodeQuest could not check this pull request.`,detail:`${e||`the backend did not respond`}. The button is not blocked.`}}async function Ne(e,t,n,r){console.log(`[AICodeQuest] context detected: ${e.context}`,e),he(t,W(e));let i=await Ae(r);if(!i)return!1;let a=ae(i),o=await je(n),s=o??await ue(t.body,a),c=Array.isArray(s)?s:s.ranges,l=Array.isArray(s)?`unknown`:s.tagging_method;o||await Me(n,s);let u=await chrome.runtime.sendMessage({type:R.EVALUATE_GATE,payload:{repo:`${e.owner}/${e.repo}`,pr_number:e.context===`pr_conversation`?e.pr_number:0,diff:i,ai_tagged_ranges:c,tagging_method:l,pr_id:n}});if(!u.ok)return console.warn(`[AICodeQuest] /gate/evaluate failed:`,u.error),_e(t,J(u.error,e)),!1;let d=u.result.trigger_decision;if(!d.fires)return ve(t,d.reasons[0]||`below threshold`),!1;let f=ne(u.result.functions||[],c);return ye(t,{targetButtonKey:W(e),reason:d.reasons[0]||`comprehension check required`,onIconClick:()=>Ce(t,{mode:ke(e),prId:n,diffUrl:r,patchUrl:V(e),owner:e.owner,repo:e.repo,target:f})}),!0}function Y(e,t=document){e.data&&e.data.source===`aicodequest`&&e.data.type===`GATE_CLEARED`&&M(t)}function X(e,t=document){e.data&&e.data.source===`aicodequest`&&e.data.type===`CLOSE_PANEL`&&L(t)}function Z(e,t=document){!e.data||e.data.source!==`aicodequest`||(e.data.type===`TOGGLE_SIZE`?we(t):e.data.type===`REQUEST_PANEL_SIZE`&&Te(t))}function Q(e=globalThis.chrome?.runtime){e?.onMessage&&e.onMessage.addListener((e,t,n)=>{if(e?.type===`AICODEQUEST_CONTENT_PING`)return n({alive:!0}),!0})}function $(e=document,t=window){let n=null;Q(),t.addEventListener(`message`,t=>{Y(t,e),X(t,e),Z(t,e)});let r=0;return te(async t=>{let i=++r,a=t;if(t.context===`new_pr`&&(a={...t,existing_pr_number:B(e),can_create:!!m(e,`createPrButton`)}),a.context!==`none`&&(a={...a,head_sha:await H(a)},i!==r))return;let o=a.context===`none`?null:z(a);Ee(e)&&De(e)!==o&&L(e),o!==n&&(M(e),n=o,a.context!==`none`&&q(a,e))},{doc:e,win:t})}return typeof document<`u`&&typeof chrome<`u`&&$(),e.diffUrlFor=U,e.existingPrNumber=B,e.explainGateFailure=J,e.handleClosePanelMessage=X,e.handleGateClearedMessage=Y,e.handleTogglePanelSizeMessage=Z,e.headShaFor=H,e.init=$,e.installContentPingResponder=Q,e.patchUrlFor=V,e.prIdFor=z,e.runGateFlow=q,e})({});
