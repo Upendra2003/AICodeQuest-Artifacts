@@ -12,16 +12,6 @@ grades the developer's fixes, generates diff-grounded multiple-choice NFR
 questions for the lead, and reports pass/fail back to GitHub via the
 Checks API.
 
-**`docs/ARCHITECTURE.md` is the full architecture document** — components,
-both state machines, the data model, study governance, the extension, the
-sandbox, deployment traps, and an honest list of known gaps.
-`docs/ARCHITECTURE.docx` is generated from it by `make architecture-doc`
-(edit the markdown, never the .docx). It says so at the top, but read it
-here too: **it is current as of Phase 30** and does not yet describe the
-comprehension phase, the three-rater agreement pipeline, or Phase 36's
-whole-file fetching. Until it is refreshed, the phase reports and this
-file are the newer record.
-
 ## How a gate is played
 
 1. A developer opens a pull request. The extension asks which hunks were
@@ -264,54 +254,6 @@ study deployment (TLS, backups, no dev shortcuts), see
   required with no default, because running it *asserts* an organisation
   agreed). **Set `org_consent_mode: required` before real participants.**
 
-## Testing
-
-| | |
-| --- | --- |
-| `make test` | backend: unit, integration, golden fixtures — **689 pass, 7 skip** |
-| `cd extension && npm run test:unit` | extension: message router, API client, content script, panel components — **366 pass** |
-| `cd extension && npm run test:e2e` | Playwright, real Chromium, real unpacked extension — **needs Xvfb**, unavailable on the current machine |
-| `cd extension && npm run shots` | renders every panel screen from the built bundle in headless Chromium and **fails on any console error** — the partial stand-in for the e2e suite |
-| `backend/scripts/bench_suitegen.py` | per-language suite-generation acceptance against the **real** model and sandbox; `--isolated` measures the pre-Phase-32 assembly through the identical loop, which is what makes an improvement claim attributable rather than assumed |
-
-Tests never call a live model: `MockLLM` (strict FIFO) and `ScriptedLLM`
-(responds by prompt shape) stand in for it.
-
-## Repository layout
-
-- `config/` — every tunable knob (`params.yaml`), its JSON schema
-  (`params.schema.json`), and a dated changelog of every change
-  (`CHANGELOG-config.md`). No threshold, weight or timeout is hardcoded in
-  source.
-- `backend/` — the Flask API, background workers, and all tests
-  (`backend/tests/{unit,integration,e2e,golden}/`). Suite generation is
-  `services/suitegen.py` plus `services/file_context.py` (compiling a
-  function inside its own file) and `services/suite_feasibility.py`
-  (remembering which functions cannot get a suite, so the attempt budget
-  is not re-paid every turn) and `services/suite_eligibility.py` (deciding
-  statically, before any model call, whether a function can support one at
-  all); the acceptance corpus is
-  `backend/tests/fixtures/suitegen_bench/`. The comprehension measure is
-  `services/mcqgen.py` (item generation, with the key obtained by
-  *executing* the original), `services/mcq_review.py` (the lead's blind
-  review queue) and `services/agreement.py` (per-rater accuracy and
-  chance-corrected agreement, kept deliberately separate)
-- `extension/` — the MV3 Chrome extension (content script, popup, game
-  panel, background service worker) and its own tests
-  (`extension/tests/{unit,e2e}/`)
-- `infra/` — docker-compose for local dev (`docker-compose.yml`) and for a
-  real deployment (`docker-compose.prod.yml`), plus Piston and Judge0 config
-- `docs/` — **`ARCHITECTURE.md`** (the whole-system architecture document,
-  and the source for the generated `ARCHITECTURE.docx`), the Chrome
-  extension primer, GitHub App setup, data flow / privacy, deployment,
-  runbook, reproducibility
-- `reports/` — one `phase-N-review.md` per phase: what was built, what was
-  tested (and against what — real infra vs. a documented substitute), and
-  open questions. Reports run 0–24, 28 and 30–37 (Phase 29 is described in
-  `CLAUDE.md` but has no report file); several carry multiple dated parts,
-  because that work arrived as successive rounds of feedback on the same
-  code rather than as separate phases. `reports/assets/` holds each
-  phase's screenshots.
 
 ## Study data
 
@@ -339,114 +281,6 @@ Three ways data comes back out, for three different readers:
 | `GET /leaderboard/report.docx` | the same data as a readable report with charts — the right shape for a person (`services/report_docx.py`) |
 | `backend/scripts/export_study_data.py` | the anonymised research export — pseudonymous IDs via a salted hash, with the real user id only in a separate private mapping file |
 | `backend/scripts/mcq_agreement.py` | the comprehension-item analysis — per-rater accuracy against the executed key and chance-corrected agreement, as CSV + JSON + codebook (`GET /research/mcq-agreement` serves the same thing) |
-
-## Reproducing the study's golden fixtures
-
-See `docs/REPRODUCIBILITY.md`.
-
-## Before a real study
-
-Assessed 2026-08-19 and re-checked 2026-08-28, ahead of a planned
-deployment with industry participants. **The engineering is ahead of the
-science**: the tool is in better shape than the study design. Two lists,
-because they have different critical paths.
-
-**Blocking a real deployment**
-
-1. **There is no researcher RBAC anywhere.** Any authenticated caller can
-   `POST /dev-gate/<pr_id>/override` — clearing their own gate — as well as
-   `POST /consent/org` and `GET /research/dashboard` (every participant's
-   data). The source says so at each site: *a real deployment MUST add a
-   role check*. This is the single item most likely to invalidate a
-   deployment, and a participant who opens the network tab can find it.
-2. **`retention_period_days` is recorded and never enforced.** No scheduled
-   job deletes anything, so it is a written commitment nothing keeps.
-3. **`llm_cache` is excluded from the terminal-state scrub**, so
-   participant source persists there indefinitely, outside the
-   minimization guarantee `data.retain_source_snippets` otherwise gives.
-4. **Account hygiene is prototype-grade** — no email verification, no
-   password policy, no invite code, and JWT secret management is unsettled.
-5. **The extension is unsigned and iconless**, so an enterprise rollout has
-   no managed-install story yet.
-6. **`consent.org_consent_mode` currently defaults to `advisory`**, which
-   is a development convenience and not a study setting. It must be set to
-   `required`, with per-owner (or explicitly wildcard) records registered
-   for whatever the ethics approval actually covers. Nothing enforces the
-   flip — it is a line in a checklist and a paragraph in
-   `docs/DATA-FLOW.md`, which states plainly that until then the document
-   does not claim every processed repository's organisation agreed, only
-   that whether it had is recorded.
-
-**Blocking a credible paper**
-
-1. ~~**`docs/STUDY-PROTOCOL.md` is a 4-line placeholder.**~~ **Written, now
-   at draft 3** (2026-08-29), revised against a system that has been played
-   end to end. Its §0 reports the three-rater agreement computed on real
-   data for the first time — developer 31%, lead 50%, generating model 91%,
-   three-way κ −0.06 — and **the developer confidence interval includes
-   chance**, so the instrument is not yet shown to measure. Two consequences
-   are recorded rather than smoothed over: the generating model **authored
-   the distractors**, which weakens its standing as a third rater; and the
-   study now has **no randomised factor at all**, because gamification was
-   the only one and the full-vs-minimal switch was never built. Draft 2's
-   framing follows. Research questions (each stated, criticised and revised),
-   the metric review against the literature, the design, per-RQ validation
-   strategy, threats and a blocking checklist. Two design decisions in it
-   are worth knowing before proposing alternatives: RQ1 asks whether
-   adversarial interaction **reveals** comprehension, not whether it
-   improves it (different verbs need different evidence, and the tool has
-   no remediation step since round 2 was removed); and an
-   attack-vs-no-attack control arm was **considered and rejected** —
-   comparing a correlation between two groups needs ~250 participants per
-   arm, so that question is answered *within* subjects by ΔR² instead.
-   Gamification is the only randomised factor. Ethics approval is still
-   outstanding.
-2. ~~**The score pools two grading regimes.**~~ **Fixed in Phase 33.**
-   Every graded attempt now records `grading_method` —
-   `executable_test` or `comparison` — as a first-class field, with
-   `grading_detail` carrying the finer distinction (expected values
-   *captured by executing the original* vs. *model-authored*, and which
-   equivalence judge decided a comparison). Both appear in the study
-   export with a codebook that tells the analyst to split on them, and
-   both leaderboards show the two rates side by side, each with its own
-   turn count. Attempts graded before the field existed carry an empty
-   value that means **unknown**, never a default regime: they are counted
-   in the pooled rate, in neither split rate, and in a published
-   `graded_defense_turns_unknown_regime` so no split rate can be read
-   without its denominator gap.
-   `backend/scripts/backfill_grading_method.py` recovers the regime for
-   older attempts from telemetry, refuses ambiguous matches, and stamps
-   what it recovers so reconstructed data stays distinguishable from
-   recorded data.
-3. ~~**The tool's own score is the only comprehension measure.**~~ **Fixed
-   in Phases 34–35.** Every gate now ends with input/output prediction
-   questions over the participant's own functions — a second, differently
-   shaped measure, and the proxy family the reliability evidence supports
-   (Arvan et al., ASE 2026). **The correct option is obtained by *running*
-   the original function**, never authored by a model, so correctness is a
-   fact about the program rather than an expert consensus.
-
-   Three raters answer each item cold, none seeing another's answer: the
-   **developer**, a reviewing **lead**, and the **generating model**. That
-   yields two statistics which are deliberately kept apart — *accuracy*
-   against the executed key, and chance-corrected *agreement* (Fleiss' κ
-   three-way, Cohen's κ pairwise). An item all three fail **identically**
-   is a misleading item; one they fail **differently** is a hard one, and
-   accuracy alone cannot tell them apart. Automated end to end:
-   `GET /research/mcq-agreement` and
-   `backend/scripts/mcq_agreement.py` (CSV + JSON + codebook).
-
-   Two caveats stated plainly. The κ has **not yet been computed on real
-   data** — no lead has reviewed anything, and the pipeline correctly
-   reports those raters as *absent* rather than zero. And an item exists
-   only where an executable suite does, so the measure is **missing on
-   exactly the code that is hardest to comprehend**; that bias must be
-   reported, not assumed away.
-4. **`advisory` and `enforced` are byte-for-byte identical** in this app's
-   code, so what reads as three enforcement arms is really two.
-5. **The comparison-graded half of the data has no reliability estimate.**
-   The inter-rater tooling was removed in Phase 30 along with the
-   free-text scorer it was built for.
 
 ## License
 
